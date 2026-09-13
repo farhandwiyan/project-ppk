@@ -1,58 +1,170 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# KARSA
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**KARSA** adalah platform web untuk mengelola reservasi penggunaan fasilitas kampus (ruang kelas, aula, laboratorium, alat, dan lapangan) sekaligus menangani pelaporan kerusakan fasilitas secara terpusat. Dibangun sebagai bagian dari Project PPK 2026 – Web Platform.
 
-## About Laravel
+Sistem melayani empat aktor dengan hak akses berbeda: **Pengunjung** (tanpa login), **User** (mahasiswa/dosen/staf), **Petugas**, dan **Admin**, mulai dari pencarian ketersediaan fasilitas, pengajuan & persetujuan reservasi, hingga pelaporan dan penanganan kerusakan fasilitas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Daftar Isi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Fitur Utama](#fitur-utama)
+- [Aktor & Role](#aktor--role)
+- [Tech Stack](#tech-stack)
+- [Struktur Folder](#struktur-folder)
+- [Instalasi & Menjalankan Aplikasi](#instalasi--menjalankan-aplikasi)
+- [Konfigurasi Environment](#konfigurasi-environment)
+- [Akun Default](#akun-default)
+- [Aturan Bisnis Utama](#aturan-bisnis-utama)
+- [Anggota Tim & Pembagian Tugas](#anggota-tim--pembagian-tugas)
+- [Screenshot](#screenshot)
+- [Lisensi](#lisensi)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Fitur Utama
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| ID | Modul | Fitur |
+|---|---|---|
+| FR-001 | Authentication & User Role Management | Register (role user), login, logout, dengan role `user` / `petugas` / `admin` |
+| FR-002 | User Management | Admin menambahkan akun user/petugas dan memverifikasi akun hasil registrasi mandiri |
+| FR-003 | Facility Management | Admin mengelola fasilitas: tambah, ubah, nonaktifkan |
+| FR-004 | Facility Search and Catalog | User/pengunjung mencari fasilitas berdasarkan tipe, lokasi, dan kapasitas |
+| FR-005 | Facility Search and Catalog | Menampilkan ketersediaan & status fasilitas berdasarkan waktu tertentu tanpa login |
+| FR-006 | Facility Reservation Request | User mengajukan reservasi (tanggal, waktu penggunaan, tujuan penggunaan) |
+| FR-007 | Facility Reservation Request | Validasi waktu reservasi pada jam operasional (07.00–20.00) |
+| FR-008 | History and Status Tracking | User melihat riwayat & status reservasi (menunggu, diterima, ditolak, dibatalkan) |
+| FR-009 | Reservation Cancellation | User membatalkan reservasi sebelum batas waktu tertentu |
+| FR-010 | Reservation Approval Management | Petugas menyetujui/menolak reservasi serta memproses laporan kerusakan |
+| FR-011 | Reservation Approval Management | Petugas melihat dashboard daftar pengajuan reservasi |
+| FR-012 | Reservation Approval Management | Sistem mencegah persetujuan reservasi yang bentrok jadwal pada fasilitas yang sama |
+| FR-013 | Submitting a Damage Report | User membuat laporan kerusakan (kategori, deskripsi, bukti foto) |
+| FR-014 | Report Status Tracking | Sistem menampilkan perkembangan status laporan kerusakan |
+| FR-015 | Report Processing and Validation | Petugas memproses/memvalidasi laporan, mengubah status (baru, diproses, selesai, ditolak), memberi catatan penyelesaian |
+| FR-016 | Report Processing and Validation | Petugas mengubah status fasilitas: aktif, dalam perbaikan, atau tidak tersedia |
+| FR-017 | Report Processing and Validation | Petugas menolak reservasi terdekat pada fasilitas yang sedang dalam perbaikan |
+| FR-018 | Reporting & Export | Admin melihat rekap penggunaan fasilitas dan jumlah kerusakan |
+| FR-019 | Reporting & Export | Admin mengekspor laporan sistem dalam format CSV, Excel, atau PDF |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Aktor & Role
 
-## Agentic Development
+| Role | Akses |
+|---|---|
+| **Pengunjung** | Melihat daftar fasilitas & ketersediaan (tanpa detail pemohon/tujuan), tanpa login |
+| **User** | Registrasi/login, ajukan & batalkan reservasi, lihat riwayat, buat & pantau laporan kerusakan |
+| **Petugas** | Kelola antrian reservasi & laporan, ubah status fasilitas, cegah bentrok jadwal |
+| **Admin** | Kelola akun (user & petugas), verifikasi registrasi, kelola data fasilitas, rekap & ekspor laporan |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Tech Stack
 
-```bash
-composer require laravel/boost --dev
+- **Backend:** Laravel (PHP)
+- **Frontend:** Blade template, HTML, CSS, JavaScript _(+ Bootstrap/Tailwind bila dipakai)_
+- **Database:** MySQL (via Eloquent ORM)
+- **Version Control:** GitHub 
 
-php artisan boost:install
+## Struktur Folder
+
+Laravel sudah secara natural memisahkan koneksi database, tampilan, dan logika proses sesuai ketentuan proyek (`/public`, `/app`, `/views`, `/config`):
+
+```
+KARSA/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/   # logika proses (controller)
+│   └── Models/            # model / representasi tabel database
+├── database/
+│   ├── migrations/        # skema tabel (users, facilities, reservations, reports)
+│   └── seeders/           # data awal (akun admin/petugas/user default)
+├── public/                # entry point (index.php) & asset publik
+├── resources/
+│   └── views/             # tampilan (Blade template)
+├── routes/
+│   └── web.php            # daftar route aplikasi
+├── config/
+│   └── database.php       # konfigurasi koneksi database
+├── .env.example
+└── README.md
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Instalasi & Menjalankan Aplikasi
 
-## Contributing
+Prasyarat: PHP >= 8.1, Composer, Node.js & npm, MySQL/MariaDB.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone repository**
+   ```bash
+   git clone <url-repository-KARSA>
+   cd KARSA
+   ```
+2. **Install dependency PHP (Laravel)**
+   ```bash
+   composer install
+   ```
+3. **Install dependency frontend** _(jika memakai Vite/asset build)_
+   ```bash
+   npm install
+   npm run build
+   ```
+4. **Salin file environment**
+   ```bash
+   cp .env.example .env
+   ```
+5. **Generate application key**
+   ```bash
+   php artisan key:generate
+   ```
+6. **Buat database** (mis. `project_ppk`) di MySQL/MariaDB, lalu sesuaikan kredensial pada `.env` (lihat [Konfigurasi Environment](#konfigurasi-environment)).
+7. **Jalankan migration** (dan seeder untuk data/akun awal)
+   ```bash
+   php artisan migrate --seed
+   ```
+8. **Jalankan aplikasi**
+   ```bash
+   php artisan serve
+   ```
+9. Akses aplikasi melalui `http://localhost:8000`.
 
-## Code of Conduct
+## Konfigurasi Environment
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Variabel utama pada `.env`:
 
-## Security Vulnerabilities
+| Variabel | Keterangan |
+|---|---|
+| `APP_NAME` | Nama aplikasi (KARSA) |
+| `APP_URL` | URL aplikasi, mis. `http://localhost:8000` |
+| `DB_CONNECTION` | `mysql` |
+| `DB_HOST` | Host database, mis. `127.0.0.1` |
+| `DB_PORT` | Port database, mis. `3306` |
+| `DB_DATABASE` | Nama database, mis. `project_ppk` |
+| `DB_USERNAME` | Username database, mis. `root` |
+| `DB_PASSWORD` | Password database, `kosongkan jika tidak ada password` |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Akun Default
 
-## License
+> Lengkapi tabel ini dengan akun yang benar-benar dibuat di seeder/database masing-masing tim.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@karsa.local` | _(diisi tim)_ |
+| Petugas | `petugas@karsa.local` | _(diisi tim)_ |
+| User | `user@karsa.local` | _(diisi tim)_ |
+
+## Aturan Bisnis Utama
+
+- Reservasi hanya berlaku pada jam operasional **07.00–20.00**, tervalidasi di sisi server.
+- Sistem mencegah **bentrok jadwal** (double-booking) pada fasilitas yang sama.
+- Registrasi mandiri hanya untuk role **user**; akun **petugas** hanya dibuat oleh admin.
+- Akun hasil registrasi mandiri harus **diverifikasi admin** sebelum bisa login.
+- Fasilitas yang sedang **dalam perbaikan** tidak dapat menerima reservasi baru pada rentang waktu terkait.
+
+## Anggota Tim & Pembagian Tugas
+
+| Nama | NIM | Tugas |
+|---|---|---|
+| _(diisi)_ | _(diisi)_ | _(diisi)_ |
+| _(diisi)_ | _(diisi)_ | _(diisi)_ |
+| _(diisi)_ | _(diisi)_ | _(diisi)_ |
+| _(diisi)_ | _(diisi)_ | _(diisi)_ |
+
+## Lisensi
+
+Project ini dibuat untuk keperluan akademik — Project PPK 2026 – Web Platform Sebelum UTS.
