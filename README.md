@@ -92,34 +92,29 @@ Prasyarat: PHP >= 8.1, Composer, Node.js & npm, MySQL/MariaDB.
 
 1. **Clone repository**
    ```bash
-   git clone <url-repository-KARSA>
-   cd KARSA
+   git clone <https://github.com/farhandwiyan/project-ppk>
+   cd project-ppk
    ```
 2. **Install dependency PHP (Laravel)**
    ```bash
    composer install
    ```
-3. **Install dependency frontend** _(jika memakai Vite/asset build)_
-   ```bash
-   npm install
-   npm run build
-   ```
-4. **Salin file environment**
+3. **Salin file environment**
    ```bash
    cp .env.example .env
    ```
-5. **Generate application key**
+4. **Generate application key**
    ```bash
    php artisan key:generate
    ```
-6. **Buat database** (mis. `project_ppk`) di MySQL/MariaDB, lalu sesuaikan kredensial pada `.env` (lihat [Konfigurasi Environment](#konfigurasi-environment)).
+5. **Buat database** (mis. `project_ppk`) di MySQL/MariaDB, lalu sesuaikan kredensial pada `.env` (lihat [Konfigurasi Environment](#konfigurasi-environment)).
 7. **Jalankan migration** (dan seeder untuk data/akun awal)
    ```bash
    php artisan migrate --seed
    ```
 8. **Jalankan aplikasi**
    ```bash
-   php artisan serve
+   composer run dev
    ```
 9. Akses aplikasi melalui `http://localhost:8000`.
 
@@ -144,9 +139,7 @@ Variabel utama pada `.env`:
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | `admin@karsa.local` | _(diisi tim)_ |
-| Petugas | `petugas@karsa.local` | _(diisi tim)_ |
-| User | `user@karsa.local` | _(diisi tim)_ |
+| Admin | `admin@example.ocom` | _(sangat rahasia)_ |
 
 ## Aturan Bisnis Utama
 
@@ -160,11 +153,11 @@ Variabel utama pada `.env`:
 
 | Nama | NIM | Tugas |
 |---|---|---|
-| _(diisi)_ | _(diisi)_ | _(diisi)_ |
-| _(diisi)_ | _(diisi)_ | _(diisi)_ |
-| _(diisi)_ | _(diisi)_ | _(diisi)_ |
-| _(diisi)_ | _(diisi)_ | _(diisi)_ |
+| _(Farhan Muhtaram)_ | _(diisi)_ | _(diisi)_ |
+| _(Farhan Dwiyan Akbar)_ | _(diisi)_ | _(diisi)_ |
+| _(Claudia Meitania Putri)_ | _(diisi)_ | _(diisi)_ |
+| _(Adelia Clearesta)_ | _(diisi)_ | _(diisi)_ |
 
 ## Lisensi
 
-Project ini dibuat untuk keperluan akademik — Project PPK 2026 – Web Platform Sebelum UTS.
+Project ini dibuat untuk keperluan akademik — Project PPK 2026 – Web Platform.
