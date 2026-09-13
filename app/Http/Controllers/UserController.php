@@ -32,6 +32,10 @@ class UserController extends Controller
     }
 
     public function verified(Request $request) {
+        if (Auth::user()->role != 'admin') {
+            return redirect()->back()->with('error', 'Akses ditolak. Anda tidak punya akses untuk melakukan verifikasi.');
+        }
+
         $user = User::where('email', '=', $request->email)->firstOrFail();
         $user->update(['status' => 'verified']);
 
@@ -39,6 +43,10 @@ class UserController extends Controller
     }
 
     public function delete(Request $request) {
+        if (Auth::user()->role != 'admin') {
+            return redirect()->back()->with('error', 'Akses ditolak. Anda tidak punya akses untuk melakukan delete user.');
+        }
+
         $user = User::where('email', '=', $request->email)->firstOrFail();
         $user->delete();
 
@@ -73,21 +81,8 @@ class UserController extends Controller
             ]);
         }
 
-        // petugas hanya bisa membuat akun user
-        if ($user->role == 'petugas' && $request->role == 'user') {
-            User::create([
-                'nama' => $request->nama,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => $request->role,
-                'status' => 'verified',
-            ]);
-        } else {
-            redirect()->back()->with('error', 'Akses ditolak. Anda tidak punya akses untuk membuat user baru.');
-        }
-
-        if ($user->role == 'user') {
-            redirect()->route('home')->with('error', 'Akses ditolak. Anda tidak punya akses untuk membuat user baru.');
+        if ($user->role == 'user' || $user->role == 'petugas') {
+            return redirect()->back()->with('error', 'Akses ditolak. Anda tidak punya akses untuk membuat user baru.');
         }
 
 
