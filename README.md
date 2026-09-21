@@ -17,7 +17,6 @@ Sistem melayani empat aktor dengan hak akses berbeda: **Pengunjung** (tanpa logi
 - [Akun Default](#akun-default)
 - [Aturan Bisnis Utama](#aturan-bisnis-utama)
 - [Anggota Tim & Pembagian Tugas](#anggota-tim--pembagian-tugas)
-- [Screenshot](#screenshot)
 - [Lisensi](#lisensi)
 
 ---
@@ -58,7 +57,7 @@ Sistem melayani empat aktor dengan hak akses berbeda: **Pengunjung** (tanpa logi
 ## Tech Stack
 
 - **Backend:** Laravel (PHP)
-- **Frontend:** Blade template, HTML, CSS, JavaScript _(+ Bootstrap/Tailwind bila dipakai)_
+- **Frontend:** Blade template, HTML, CSS, JavaScript 
 - **Database:** MySQL (via Eloquent ORM)
 - **Version Control:** GitHub 
 
@@ -67,7 +66,7 @@ Sistem melayani empat aktor dengan hak akses berbeda: **Pengunjung** (tanpa logi
 Laravel sudah secara natural memisahkan koneksi database, tampilan, dan logika proses sesuai ketentuan proyek (`/public`, `/app`, `/views`, `/config`):
 
 ```
-KARSA/
+project_ppk/
 ├── app/
 │   ├── Http/
 │   │   └── Controllers/   # logika proses (controller)
@@ -92,7 +91,7 @@ Prasyarat: PHP >= 8.1, Composer, Node.js & npm, MySQL/MariaDB.
 
 1. **Clone repository**
    ```bash
-   git clone <https://github.com/farhandwiyan/project-ppk>
+   git clone https://github.com/farhandwiyan/project-ppk
    cd project-ppk
    ```
 2. **Install dependency PHP (Laravel)**
@@ -135,11 +134,9 @@ Variabel utama pada `.env`:
 
 ## Akun Default
 
-> Lengkapi tabel ini dengan akun yang benar-benar dibuat di seeder/database masing-masing tim.
-
 | Role | Email | Password |
 |---|---|---|
-| Admin | `admin@example.ocom` | _(sangat rahasia)_ |
+| Admin | `admin@example.ocom` | sangat rahasia |
 
 ## Aturan Bisnis Utama
 
@@ -153,10 +150,10 @@ Variabel utama pada `.env`:
 
 | Nama | NIM | Tugas |
 |---|---|---|
-| _(Farhan Muhtaram)_ | _(diisi)_ | _(diisi)_ |
-| _(Farhan Dwiyan Akbar)_ | _(diisi)_ | _(diisi)_ |
-| _(Claudia Meitania Putri)_ | _(diisi)_ | _(diisi)_ |
-| _(Adelia Clearesta)_ | _(diisi)_ | _(diisi)_ |
+| Farhan Muhtaram | 24060124140185 | _(diisi)_ |
+| Farhan Dwiyan Akbar | 24060124140137 | _(diisi)_ |
+| Claudia Meitania Putri | 24060124140188 | _(diisi)_ |
+| Adelia Clearesta | 24060124140204 | _(diisi)_ |
 
 ## Lisensi
 
