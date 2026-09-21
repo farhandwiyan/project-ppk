@@ -20,22 +20,28 @@
         @csrf
 
       <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
       </div>
 
       <div class="form-group">
         <input type="password" id="password" name="password" placeholder="Password" required>
       </div>
 
-      @error('email')
-        <div class="error">{{ $message }}</div>
-      @enderror
+      @if ($errors->any())
+        <div class="error-list">
+          <ul>
+            @foreach ($errors->all() as $message)
+              <li>{{ $message }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
 
-      <button type="submit">Login</button>
+      <button type="submit">LOGIN</button>
     </form>
 
     <p class="login-link">
-      Belum punya akun? <a href="{{ route('register') }}">Register disini</a>
+      Belum ada akun?<a href="{{ route('register') }}"> Register disini</a>
     </p>
   </div>
 

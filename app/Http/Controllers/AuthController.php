@@ -55,9 +55,14 @@ class AuthController extends Controller
         // attempt login
         if (Auth::attempt(array_merge($credentials, ['status' => 'verified']))) {
             $request->session()->regenerate();
-
-            if (Auth::user()->role != 'user') {
-                return redirect()->intended('dashboard')->with('success', 'Login berhasil! Selamat datang!');
+            
+            $user = Auth::user();
+            if ($user->role != 'user') {
+                if ($user->role == 'admin') {
+                    return redirect()->intended('admin/dashboard')->with('success', 'Login berhasil! Selamat datang!');
+                } else {
+                    return redirect()->intended('petugas/dashboard')->with('success', 'Login berhasil! Selamat datang!');
+                }
             }
 
             return redirect()->intended('/')->with('success', 'Login berhasil! Selamat datang!');

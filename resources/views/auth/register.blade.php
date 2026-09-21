@@ -19,29 +19,30 @@
         @csrf
 
       <div class="form-group">
-        <input type="text" id="nama" name="nama" placeholder="Nama" required>
-        @error('nama')
-            <div class="error">{{ $message }}</div>
-        @enderror
+        <input type="text" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') }}" required>
       </div>
 
       <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Email" required>
-        @error('email')
-            <div class="error">{{ $message }}</div>
-        @enderror
+        <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
       </div>
 
       <div class="form-group">
         <input type="password" id="password" name="password" placeholder="Password" required>
-        @error('password')
-            <div class="error">{{ $message }}</div>
-        @enderror
       </div>
 
       <div class="form-group">
         <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password" required>
       </div>
+
+      @if ($errors->any())
+        <div class="error-list">
+          <ul>
+            @foreach ($errors->all() as $message)
+              <li>{{ $message }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
 
       <button type="submit">Register</button>
     </form>

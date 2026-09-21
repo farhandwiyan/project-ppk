@@ -11,8 +11,8 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function dashboard()
+    public function dashboardPetugas() 
     {
-        return view('dashboard');
+        return view('petugas.dashboard');
     }
 }

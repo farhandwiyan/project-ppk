@@ -108,7 +108,7 @@
     <div class="form-container">
         <div class="form-header">
             <h2>Tambah User Baru</h2>
-            <a href="{{ route('dashboard') }}">&larr; Kembali</a>
+            <a href="{{ route('admin.home') }}">&larr; Kembali</a>
         </div>
 
         <form action="{{ route('createUser') }}" method="POST">

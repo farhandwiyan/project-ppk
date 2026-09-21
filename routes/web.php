@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,13 @@ Route::middleware('guest')->group(function () {
 // auth
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [UserController::class, 'showAllUser'])->name('dashboard');
+
+    // admin
+    Route::get('admin/dashboard', [DashboardController::class, 'homeAdmin'])->name('admin.home');
+    Route::get('admin/users', [DashboardController::class, 'showAllUser'])->name('users.index');
+
+    // petugas
+    Route::get('petugas/dashboard', [DashboardController::class, 'homePetugas'])->name('petugas.home');
 
     Route::post('/verifiedUser', [UserController::class, 'verified'])->name('verifiedUser');
     Route::delete('/deleteUser', [UserController::class, 'delete'])->name('deleteUser');

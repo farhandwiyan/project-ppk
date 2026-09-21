@@ -10,7 +10,14 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function showAllUser(Request $request) {
+    public function index()
+    {
+        return view('admin.dashboard', [
+            'verifiedUsers' => User::where('status', 'verified')->count(),
+        ]);
+    }
+
+    public function getAllUser(Request $request) {
         $search = $request->input('search');
         $filter = $request->input('filter');
 
@@ -28,7 +35,7 @@ class UserController extends Controller
         })
         ->paginate(50)->withQueryString();
 
-        return view('dashboard', compact('users', 'search', 'filter'));
+        return view('admin.user', compact('users'));
     }
 
     public function verified(Request $request) {
@@ -39,7 +46,7 @@ class UserController extends Controller
         $user = User::where('email', '=', $request->email)->firstOrFail();
         $user->update(['status' => 'verified']);
 
-        return redirect()->route('dashboard')->with('success', 'User berhasil di verifikasi');
+        return redirect()->back()->with('success', 'User berhasil di verifikasi');  
     }
 
     public function delete(Request $request) {
@@ -50,7 +57,7 @@ class UserController extends Controller
         $user = User::where('email', '=', $request->email)->firstOrFail();
         $user->delete();
 
-        return redirect()->route('dashboard')->with('success', 'User berhasil di hapus');
+        return redirect()->back()->with('success', 'User berhasil di hapus');
     }
 
     public function showCreateForm() {
@@ -86,7 +93,7 @@ class UserController extends Controller
         }
 
 
-        return redirect()->route('dashboard')->with('success', 'Berhasil membuat user baru');
+        return redirect()->route('users.index')->with('success', 'Berhasil membuat user baru!');
     }
 
     public function showUpdateForm() {
