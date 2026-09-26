@@ -78,7 +78,7 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #4a90e2;
+            border-color: #1a1a4b;
         }
 
         .error-text {
@@ -90,7 +90,7 @@
         button {
             width: 100%;
             padding: 11px;
-            background-color: #4a90e2;
+            background-color: #1a1a4b;
             color: white;
             border: none;
             border-radius: 6px;
@@ -100,7 +100,7 @@
         }
 
         button:hover {
-            background-color: #357abd;
+            background-color: #15153c;
         }
     </style>
 </head>

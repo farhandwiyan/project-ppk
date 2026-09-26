@@ -116,3 +116,127 @@ body {
     border-radius: 10px;
 
 }
+
+/* Fasilitas Section */
+.fasilitas {
+    display: flex;
+    gap: 2.5rem;
+    flex-direction: column;
+    background-color: #1a1a4b;
+    padding: 4rem;
+}
+
+.fasilitas h2 {
+    color: #ffffff;
+    font-size: 2.8rem;
+    font-weight: 600;
+}
+
+.fasilitas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+
+.fasilitas-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    padding: 1.5rem 1.5rem 2.5rem 1.5rem;
+    border-radius: 10px;
+}
+
+.fasilitas-card img {
+    width: 140px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.fasilitas-content {
+    text-align: center;
+    color: #000;
+}
+
+.fasilitas-content h3 {
+    font-weight: 600;
+}
+
+.fasilitas-content p {
+    font-weight: 200;
+}
+
+/* Prosedur Section */
+.prosedur {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 4rem;
+}
+
+.prosedur-title {
+    text-align: center;
+}
+
+.prosedur-title h2 {
+    font-size: 4rem;
+    margin-bottom: 1.3rem;
+    font-weight: 600;
+}
+
+.prosedur-title h3 {
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.prosedur-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;
+}
+
+.prosedur-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #1a1a4b;
+    color: #ffffff;
+    padding: 2rem 2rem 4rem 2rem;
+    border-radius: 6px;
+
+    flex: 1 1 0;      
+    width: 320px;     
+    box-sizing: border-box;
+}
+
+.prosedur-card .number {
+    text-align: end;
+    font-size: larger;
+}
+
+.prosedur-card hr {
+    margin-top: auto;
+    height: 2px;
+    background-color: #ffffff;
+    border: none;
+}
+
+.prosedur-content { 
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.prosedur-content h3 {
+    font-weight: 600;
+}
+
+.prosedur-content p {
+    font-weight: 300;
+    min-height: 3rem;
+}
