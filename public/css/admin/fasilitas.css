@@ -1,0 +1,80 @@
+/* Filter form */
+.fasilitas-filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-input {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.filter-search {
+    flex: 1 1 220px;
+}
+
+/* Table */
+.fasilitas-table-wrapper {
+    overflow-x: auto;
+}
+
+.fasilitas-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.fasilitas-table thead {
+    background-color: #1a1a4b;
+    color: #ffffff;
+}
+
+.fasilitas-table th,
+.fasilitas-table td {
+    text-align: left;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.fasilitas-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.fasilitas-table tbody tr:hover {
+    background-color: #f7f7fb;
+}
+
+.fasilitas-actions {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.btn-icon {
+    background: none;
+    background-color: #29A195;
+    color: #ffffff;
+    border: none;
+    text-decoration: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+}
+
+.btn-icon-danger {
+    color: #c0392b;
+}
+
+.btn-icon-danger:hover {
+    background-color: #fdecea;
+}
+
+.fasilitas-table .empty-note {
+    text-align: center;
+    color: #999;
+    padding: 30px;;
+}

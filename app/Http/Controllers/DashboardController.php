@@ -20,4 +20,9 @@ class DashboardController extends Controller
     {
         return $userController->getAllUser($request);
     }
+
+    public function showAllFasilitas(FasilitasController $fasilitasController, Request $request) 
+    {
+        return $fasilitasController->getAllFasilitas($request);
+    }
 }

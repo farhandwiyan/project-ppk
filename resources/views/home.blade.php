@@ -23,7 +23,7 @@
         <div class="navbar-nav">
             <a href="#home">Beranda</a>
             <a href="#">Laporan Kerusakan</a>
-            <a href="#">Panduan</a>
+            <a href="#prosedur">Panduan</a>
             <a id="button-login" href="{{ route('login') }}">Login</a>
             <a href="" id="hamburger-menu"><i data-feather="menu"></i></a>
         </div>
@@ -38,6 +38,104 @@
             <a href="#">Cek Fasilitas</a>
         </div>
       </section>
+
+      <!-- Fasilitas Section -->
+       <section class="fasilitas" id="fasilitas">
+            <h2>Fasilitas</h2>
+            <div class="fasilitas-container">
+                <div class="fasilitas-card">
+                    <img src="{{ asset('img/ruang-kelas.png') }}" alt="Ruang Kelas">
+
+                    <div class="fasilitas-content">
+                        <h3>Ruang Kelas</h3>
+                        <p>Tersedia</p>
+                        <p>50</p>
+                    </div>
+                </div>
+
+                <div class="fasilitas-card">
+                    <img src="{{ asset('img/ruang-kelas.png') }}" alt="Ruang Kelas">
+
+                    <div class="fasilitas-content">
+                        <h3>Aula</h3>
+                        <p>Tersedia</p>
+                        <p>50</p>
+                    </div>
+                </div>
+                <div class="fasilitas-card">
+                    <img src="{{ asset('img/lapangan.png') }}" alt="Ruang Kelas">
+
+                    <div class="fasilitas-content">
+                        <h3>Lapangan</h3>
+                        <p>Tersedia</p>
+                        <p>50</p>
+                    </div>
+                </div>
+
+                <div class="fasilitas-card">
+                    <img src="{{ asset('img/alat.png') }}" alt="Ruang Kelas">
+
+                    <div class="fasilitas-content">
+                        <h3>Alat</h3>
+                        <p>Tersedia</p>
+                        <p>50</p>
+                    </div>
+                </div>
+
+                <div class="fasilitas-card">
+                    <img src="{{ asset('img/laboratorium.png') }}" alt="Ruang Kelas">
+
+                    <div class="fasilitas-content">
+                        <h3>Laboratorium</h3>
+                        <p>Tersedia</p>
+                        <p>50</p>
+                    </div>
+                </div>
+            </div>
+       </section>   
+
+        <!-- Prosedur Section -->
+       <section class="prosedur" id="prosedur">
+        <div class="prosedur-title">
+            <h2>Prosedur Peminjaman Fasilitas</h2>
+            <h3>Alur Reservasi</h3>
+        </div>
+
+        <div class="prosedur-container">
+            <div class="prosedur-card">
+                <p class="number">1</p>
+                <div class="prosedur-content">
+                    <h3>Cek Jadwal</h3>
+                    <p>Eksplorasi ketersediaan ruang secara publik tanpa perlu login. Pastikan jam tidak tumpang tindih antara 07.00 - 20.00 WIB.</p>
+                    <hr>
+                </div>
+            </div>
+            <div class="prosedur-card">
+                <p class="number">2</p>
+                <div class="prosedur-content">
+                    <h3>Ajukan Reservasi</h3>
+                    <p>Masuk halaman Reservasi, lengkapi formulir proposal acara, estimasi peserta, serta permohonan alat multimedia.</p>
+                    <hr>
+                </div>
+            </div>
+            <div class="prosedur-card">
+                <p class="number">3</p>
+                <div class="prosedur-content">
+                    <h3>Verifikasi Petugas</h3>
+                    <p>Petugas memeriksa surat Permohonan, dan proposal dari pengguna.</p>
+                    <hr>
+                </div>
+            </div>
+            <div class="prosedur-card">
+                <p class="number">4</p>
+                <div class="prosedur-content">
+                    <h3>Pakai & Lapor</h3>
+                    <p>Riwayat Peminjaman di terima oleh petugas dan dapat melaporkan Kerusakan kepada petugas.</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+       </section>
 
      
      <!-- Feather Icon -->

@@ -1,0 +1,111 @@
+/* Search & Filter form */
+.admin-filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-input {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.filter-search {
+    flex: 1 1 220px;
+}
+
+/* Table */
+.admin-table-wrapper {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.admin-table thead {
+    background-color: #1a1a4b;
+    color: #ffffff;
+}
+
+.admin-table th,
+.admin-table td {
+    text-align: left;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f7f7fb;
+}
+
+/* Aksi (Edit/Hapus/Verify di tabel) */
+.admin-actions {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.admin-actions form {
+    display: inline;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    text-decoration: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+}
+
+.btn-icon-danger {
+    color: #c0392b;
+    background-color: #fdecea;
+}
+
+.btn-icon-verify {
+    color: #d4f5f2;
+    background-color: #29A195;
+}
+
+/* Badge status verifikasi */
+.badge-verified {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.badge-unverified {
+    background-color: #fdecea;
+    color: #c0392b;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.no-action {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.admin-table .empty-note {
+    text-align: center;
+    padding: 2rem;
+    color: #999;
+}

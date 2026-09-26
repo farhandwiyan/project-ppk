@@ -18,6 +18,7 @@
             <ul class="sidebar-nav">
                 <li><a href="{{ route('admin.home') }}" class="active">Home</a></li>
                 <li><a href="{{ route('users.index') }}">Semua User</a></li>
+                <li><a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
             </ul>
 
             <div class="sidebar-footer">
