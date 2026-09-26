@@ -25,27 +25,37 @@ Route::middleware('guest')->group(function () {
 // auth
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    // admin
-    Route::get('admin/dashboard', [DashboardController::class, 'homeAdmin'])->name('admin.home');
     
-    Route::get('admin/users', [DashboardController::class, 'showAllUser'])->name('users.index');
-    Route::post('/verifiedUser', [UserController::class, 'verified'])->name('verifiedUser');
-    Route::delete('/deleteUser', [UserController::class, 'delete'])->name('deleteUser');
-    Route::get('/users/create', [UserController::class, 'showCreateForm'])->name('create-user');
-    Route::post('/user/create', [UserController::class, 'create'])->name('createUser');
     Route::get('/users/update', [UserController::class, 'showUpdateForm'])->name('update-user');
     Route::put('users/update', [UserController::class, 'update'])->name('updateUser');
-    
-    Route::get('admin/fasilitas', [DashboardController::class, 'showAllFasilitas'])->name('fasilitas.index');
-    Route::get('admin/fasilitas/create', [FasilitasController::class, 'showCreateForm'])->name('fasilitas.create');
-    Route::post('admin/fasilitas', [FasilitasController::class, 'create'])->name('fasilitas.store');
-    Route::get('admin/fasilitas/{fasilitas}/edit', [FasilitasController::class, 'showEditForm'])->name('fasilitas.edit');
-    Route::put('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'update'])->name('fasilitas.update');
-    Route::delete('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'delete'])->name('fasilitas.delete');
 
-    // petugas
-    Route::get('petugas/dashboard', [DashboardController::class, 'homePetugas'])->name('petugas.home');
+    // role: admin
+    Route::middleware('role:admin')->group(function () {
+        Route::get('admin/dashboard', [DashboardController::class, 'homeAdmin'])->name('admin.home');
+        
+        Route::get('admin/users', [DashboardController::class, 'showAllUser'])->name('users.index');
+        Route::post('/verifiedUser', [UserController::class, 'verified'])->name('verifiedUser');
+        Route::delete('/deleteUser', [UserController::class, 'delete'])->name('deleteUser');
+        Route::get('/users/create', [UserController::class, 'showCreateForm'])->name('create-user');
+        Route::post('/user/create', [UserController::class, 'create'])->name('createUser');
+        
+        Route::get('admin/fasilitas', [DashboardController::class, 'showAllFasilitas'])->name('fasilitas.index');
+        Route::get('admin/fasilitas/create', [FasilitasController::class, 'showCreateForm'])->name('fasilitas.create');
+        Route::post('admin/fasilitas', [FasilitasController::class, 'create'])->name('fasilitas.store');
+        Route::get('admin/fasilitas/{fasilitas}/edit', [FasilitasController::class, 'showEditForm'])->name('fasilitas.edit');
+        Route::put('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'update'])->name('fasilitas.update');
+        Route::delete('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'delete'])->name('fasilitas.delete');
+    });
+
+    // role: petugas
+    Route::middleware('role:petugas')->group(function () {
+        Route::get('petugas/dashboard', [DashboardController::class, 'homePetugas'])->name('petugas.home');
+    });
+
+    // role: user
+    Route::middleware('role:user')->group(function () {
+        // Rute khusus role user
+    });
 
     // user
     Route::get('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'showCreateForm'])->name('reservations.create');

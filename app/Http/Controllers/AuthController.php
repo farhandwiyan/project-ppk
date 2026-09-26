@@ -59,13 +59,13 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->role != 'user') {
                 if ($user->role == 'admin') {
-                    return redirect()->intended('admin/dashboard')->with('success', 'Login berhasil!');
+                    return redirect()->route('admin.home')->with('success', 'Login berhasil!');
                 } else {
-                    return redirect()->intended('petugas/dashboard')->with('success', 'Login berhasil!');
+                    return redirect()->route('petugas.home')->with('success', 'Login berhasil!');
                 }
             }
 
-            return redirect()->intended('/')->with('success', 'Login berhasil!');
+            return redirect()->route('home')->with('success', 'Login berhasil!');
         }
 
         // jika gagal login

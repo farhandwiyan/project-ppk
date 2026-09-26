@@ -137,7 +137,7 @@
     <div class="form-container">
         <div class="form-header">
             <h2>Edit Profil</h2>
-            <a href="{{ route('admin.home') }}">&larr; Kembali</a>
+            <a href="{{ url()->previous() }}">&larr; Kembali</a>
         </div>
 
         @if (session('success'))
