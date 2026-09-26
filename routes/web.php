@@ -54,13 +54,10 @@ Route::middleware('auth')->group(function () {
 
     // role: user
     Route::middleware('role:user')->group(function () {
-        // Rute khusus role user
+        Route::get('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'showCreateForm'])->name('reservations.create');
+        Route::post('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'create'])->name('reservations.store');
+        Route::get('/reservasi/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
+    
+        Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
     });
-
-    // user
-    Route::get('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'showCreateForm'])->name('reservations.create');
-    Route::post('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'create'])->name('reservations.store');
-    Route::get('/reservasi/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
-
-    Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
 });
