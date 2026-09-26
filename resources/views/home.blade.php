@@ -22,7 +22,7 @@
 
         <div class="navbar-nav">
             <a href="#home">Beranda</a>
-            <a href="#">Laporan Kerusakan</a>
+            <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
             <a href="#prosedur">Panduan</a>
             <a id="button-login" href="{{ route('login') }}">Login</a>
             <a href="" id="hamburger-menu"><i data-feather="menu"></i></a>
@@ -35,7 +35,7 @@
             <h1>Selamat Datang di Karsa</h1>
             <p>Temukan, cek ketersediaan, dan reservasi ruangan serta 
                 fasilitas kampus favoritmu hanya dalam beberapa klik.</p>
-            <a href="#">Cek Fasilitas</a>
+            <a href="{{ route('fasilitas-public.index') }}">Cek Fasilitas</a>
         </div>
       </section>
 
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="fasilitas-card">
-                    <img src="{{ asset('img/ruang-kelas.png') }}" alt="Ruang Kelas">
+                    <img src="{{ asset('img/aula.png') }}" alt="Ruang Kelas">
 
                     <div class="fasilitas-content">
                         <h3>Aula</h3>

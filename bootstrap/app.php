@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (\App\Exceptions\SlotBentrokException $e, $request) {
+            return back()->withInput()->withErrors(['start_time' => $e->getMessage()]);
+        });
+
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );

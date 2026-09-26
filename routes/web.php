@@ -3,11 +3,14 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FasilitasController;
+use App\Http\Controllers\FasilitasPublicController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/fasilitas', [FasilitasPublicController::class, 'index'])->name('fasilitas-public.index');
 
 // guest
 Route::middleware('guest')->group(function () {
@@ -16,6 +19,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/login', [AuthController::class, 'showLoginForm']);
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 });
 
 // auth
@@ -43,4 +47,10 @@ Route::middleware('auth')->group(function () {
     // petugas
     Route::get('petugas/dashboard', [DashboardController::class, 'homePetugas'])->name('petugas.home');
 
+    // user
+    Route::get('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'showCreateForm'])->name('reservations.create');
+    Route::post('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'create'])->name('reservations.store');
+    Route::get('/reservasi/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
+
+    Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
 });
