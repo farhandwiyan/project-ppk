@@ -148,6 +148,93 @@ body {
     align-items: center;
 }
 
+.alert-success {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #c3e6cb;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+}
+
+.section-divider {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid #eee;
+}
+
+.status-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.status-zone-info h3 {
+    color: #1a1a4b;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.status-zone-info p {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+.status-zone-hint {
+    max-width: 380px;
+    color: #999 !important;
+    font-size: 0.78rem !important;
+}
+
+.status-zone-form {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.status-zone-form select {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    background-color: #ffffff;
+}
+
+.status-zone-form .btn-primary {
+    padding: 0.55rem 1.2rem;
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.badge-status-aktif {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+}
+
+.badge-status-perbaikan {
+    background-color: #fdeee3;
+    color: #c2410c;
+}
+
+.badge-status-nonaktif {
+    background-color: #f1f1f4;
+    color: #555;
+}
+
 /* Danger zone (hapus fasilitas) */
 .danger-divider {
     margin: 2rem 0;

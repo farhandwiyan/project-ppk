@@ -99,7 +99,7 @@
 
                     <select name="filter_status_peminjaman">
                         <option value="">Status</option>
-                        <option value="diproses" {{ request('filter_status_peminjaman') == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                        <option value="menunggu" {{ request('filter_status_peminjaman') == 'menunggu' ? 'selected' : '' }}>Diproses</option>
                         <option value="disetujui" {{ request('filter_status_peminjaman') == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
                         <option value="selesai" {{ request('filter_status_peminjaman') == 'selesai' ? 'selected' : '' }}>Selesai</option>
                         <option value="ditolak" {{ request('filter_status_peminjaman') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>

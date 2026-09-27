@@ -25,7 +25,7 @@
             <a href="#">Laporan Kerusakan</a>
             <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
             <!-- tambahkan nanti -->
-            <a href="">Riwayat</a>
+            <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
             <a href="" id="profile-icon" aria-label="Profil Saya">
                 <i data-feather="user"></i>
             </a>
@@ -47,22 +47,28 @@
             // jika ada gambar tambahan
             $galeri = $fasilitas->galeri ?? [$gambarUtama, $gambarUtama, $gambarUtama];
 
-            $statusLabel = match ($fasilitas->status ?? 'tersedia') {
-                'tersedia'        => 'Tersedia',
-                'terpakai'        => 'Terpakat',
+            $statusLabel = match ($fasilitas->status ?? 'aktif') {
+                'aktif'           => 'Tersedia',
                 'dalam_perbaikan' => 'Dalam Perbaikan',
+                'nonaktif'        => 'Tidak Tersedia',
                 default           => 'Tersedia',
             };
 
-            $statusClass = match ($fasilitas->status ?? 'tersedia') {
-                'tersedia'        => 'badge-status-tersedia',
-                'terpakai'        => 'badge-status-terpakai',
+            $statusClass = match ($fasilitas->status ?? 'aktif') {
+                'aktif'           => 'badge-status-tersedia',
                 'dalam_perbaikan' => 'badge-status-perbaikan',
+                'nonaktif'        => 'badge-status-terpakai',
                 default           => 'badge-status-tersedia',
             };
 
+            // Fasilitas hanya bisa direservasi kalau statusnya 'aktif'
+            $fasilitasBisaDireservasi = ($fasilitas->status ?? 'aktif') === 'aktif';
+
+            // case-insensitive
+            $isAlat = strtolower($fasilitas->tipe_fasilitas) === 'alat';
+
             // default tanggal H+2
-            $tanggalDefault = ($tanggalTerpilih ?? now()->addDay(2))->format('Y-m-d');
+            $tanggalDefault = ($tanggalTerpilih ?? now()->addDays(2))->format('Y-m-d');
         @endphp
 
         <!-- ===== Info Fasilitas ===== -->
@@ -78,7 +84,7 @@
                     Kategori: {{ $fasilitas->tipe_fasilitas }}
                 </span>
                 <span>
-                    Kapasitas Maksimal: {{ $fasilitas->kapasitas }} Orang
+                    {{ $isAlat ? 'Stok Tersedia' : 'Kapasitas Maksimal' }}: {{ $fasilitas->kapasitas }} {{ $isAlat ? 'Unit' : 'Orang' }}
                 </span>
             </div>
         </section>
@@ -101,182 +107,189 @@
                 <p><span class="required">*</span> Pengajuan reservasi Anda akan ditinjau dan dikonfirmasi terlebih dahulu oleh petugas</p>
             </div>
 
-            @if ($errors->any() && !$errors->has([
-                'tanggal', 'start_time', 'end_time', 'nama_pemohon', 'instansi_pemohon',
-                'nama_kegiatan', 'deskripsi_kegiatan', 'estimasi_peserta',
-                'surat_peminjaman', 'proposal_kegiatan',
-            ]))
-                {{-- Error umum dari SlotBentrokException (di-attach ke key 'start_time' pada handler) akan
-                     otomatis muncul lewat @error di field jam mulai. Blok ini untuk error lain di luar field. --}}
+            <!-- SlotBentrokException ditampilkan di sini -->
+            @error('fasilitas_id')
+                <div class="alert-error" style="margin: 0 2.2rem 1.5rem;">{{ $message }}</div>
+            @enderror
+
+            {{-- form hanya ditampilkan kalau fasilitas memang bisa direservasi --}}
+            @if ($fasilitasBisaDireservasi)
+                <form action="{{ route('reservations.store', $fasilitas) }}" method="POST" enctype="multipart/form-data" class="reservasi-form">
+                    @csrf
+
+                    {{-- Wajib ada: ReservationService membaca $data['fasilitas_id'] untuk cek bentrok jadwal --}}
+                    <input type="hidden" name="fasilitas_id" value="{{ $fasilitas->id }}">
+
+                    <div class="form-group">
+                        <label for="tanggal">Tanggal Kegiatan <span class="required">*</span></label>
+                        <input
+                            type="date"
+                            id="tanggal"
+                            name="tanggal"
+                            value="{{ old('tanggal', $tanggalDefault) }}"
+                            required
+                        >
+                        @error('tanggal')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start_time">Mulai (WIB) <span class="required">*</span></label>
+                            <input
+                                type="time"
+                                id="start_time"
+                                name="start_time"
+                                min="07:00"
+                                max="20:00"
+                                value="{{ old('start_time', '07:00') }}"
+                                required
+                            >
+                            {{-- SlotBentrokException di-attach ke key 'start_time' — pesan bentrok jadwal muncul di sini --}}
+                            @error('start_time')
+                                <span class="error-text">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="end_time">Selesai (WIB) <span class="required">*</span></label>
+                            <input
+                                type="time"
+                                id="end_time"
+                                name="end_time"
+                                min="07:00"
+                                max="20:00"
+                                value="{{ old('end_time', '20:00') }}"
+                                required
+                            >
+                            <span class="field-hint">Batas Operasional: 07.00 - 20.00 WIB</span>
+                            @error('end_time')
+                                <span class="error-text">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nama_pemohon">Nama Pemohon <span class="required">*</span></label>
+                        <input
+                            type="text"
+                            id="nama_pemohon"
+                            name="nama_pemohon"
+                            value="{{ old('nama_pemohon', auth()->user()->nama ?? '') }}"
+                            placeholder="Contoh: Max Verstappen"
+                            required
+                        >
+                        @error('nama_pemohon')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instansi_pemohon">Instansi Pemohon <span class="required">*</span></label>
+                        <input
+                            type="text"
+                            id="instansi_pemohon"
+                            name="instansi_pemohon"
+                            value="{{ old('instansi_pemohon') }}"
+                            placeholder="Organisasi Mahasiswa (BEM/DPM/HMD)"
+                            required
+                        >
+                        @error('instansi_pemohon')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nama_kegiatan">Nama Kegiatan <span class="required">*</span></label>
+                        <input
+                            type="text"
+                            id="nama_kegiatan"
+                            name="nama_kegiatan"
+                            value="{{ old('nama_kegiatan') }}"
+                            placeholder="Contoh: LKMMPD 2026"
+                            required
+                        >
+                        @error('nama_kegiatan')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deskripsi_kegiatan">Deskripsi Singkat Kegiatan <span class="required">*</span></label>
+                        <textarea
+                            id="deskripsi_kegiatan"
+                            name="deskripsi_kegiatan"
+                            rows="2"
+                            placeholder="Contoh: Kegiatan ospek jurusan mahasiswa baru tahun 2026"
+                            required
+                        >{{ old('deskripsi_kegiatan') }}</textarea>
+                        @error('deskripsi_kegiatan')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        {{-- label dinamis sesuai tipe fasilitas (sebelumnya statis "Estimasi Peserta") --}}
+                        <label for="jumlah_peserta">
+                            @if ($isAlat)
+                                Jumlah Unit yang Dipinjam (Maks. {{ $fasilitas->kapasitas }} unit) <span class="required">*</span>
+                            @else
+                                Estimasi Jumlah Peserta (Maks. {{ $fasilitas->kapasitas }} Orang) <span class="required">*</span>
+                            @endif
+                        </label>
+                        <input
+                            type="number"
+                            id="jumlah_peserta"
+                            name="jumlah_peserta"
+                            min="1"
+                            max="{{ $fasilitas->kapasitas }}"
+                            value="{{ old('jumlah_peserta') }}"
+                            required
+                        >
+                        @error('jumlah_peserta')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label>Surat Peminjaman Ruangan <span class="required">*</span></label>
+                        <div class="dropzone" data-dropzone-for="surat_peminjaman">
+                            <input type="file" id="surat_peminjaman" name="surat_peminjaman" accept="application/pdf" hidden required>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 13L10.5 15.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                            <p>Tarik dokumen ke sini atau <span class="dropzone-link">Jelajahi Berkas</span></p>
+                            {{-- PERBAIKAN: hint disamakan dengan rule validasi (max:2048 = 2MB), sebelumnya salah tulis 5MB --}}
+                            <span class="dropzone-hint">Mendukung format pdf (Maksimal 2 MB)</span>
+                            <span class="dropzone-filename"></span>
+                        </div>
+                        @error('surat_peminjaman')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label>Proposal Kegiatan</label>
+                        <div class="dropzone" data-dropzone-for="proposal_kegiatan">
+                            <input type="file" id="proposal_kegiatan" name="proposal_kegiatan" accept="application/pdf" hidden>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 13L10.5 15.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                            <p>Tarik dokumen ke sini atau <span class="dropzone-link">Jelajahi Berkas</span></p>
+                            <span class="dropzone-hint">Mendukung format pdf (Maksimal 5 MB)</span>
+                            <span class="dropzone-filename"></span>
+                        </div>
+                        @error('proposal_kegiatan')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        Ajukan Reservasi
+                    </button>
+
+                    <p class="form-footnote">
+                        <span class="required">*</span>Catatan: Pembatalan reservasi hanya dapat dilakukan maksimal 3 hari (H-3) sebelum tanggal kegiatan.
+                    </p>
+                </form>
             @endif
-
-            <form action="{{ route('reservations.store', $fasilitas) }}" method="POST" enctype="multipart/form-data" class="reservasi-form">
-                @csrf
-
-                {{-- Wajib ada: ReservationService membaca $data['fasilitas_id'] untuk cek bentrok jadwal --}}
-                <input type="hidden" name="fasilitas_id" value="{{ $fasilitas->id }}">
-
-                <div class="form-group">
-                    <label for="tanggal">Tanggal Kegiatan <span class="required">*</span></label>
-                    <input
-                        type="date"
-                        id="tanggal"
-                        name="tanggal"
-                        value="{{ old('tanggal', $tanggalTerpilih->format('Y-m-d')) }}"
-                        required
-                    >
-                    @error('tanggal')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="start_time">Mulai (WIB) <span class="required">*</span></label>
-                        <input
-                            type="time"
-                            id="start_time"
-                            name="start_time"
-                            min="07:00"
-                            max="20:00"
-                            value="{{ old('start_time', '07:00') }}"
-                            required
-                        >
-                        {{-- SlotBentrokException di-attach ke key 'start_time' — pesan bentrok jadwal muncul di sini --}}
-                        @error('start_time')
-                            <span class="error-text">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="end_time">Selesai (WIB) <span class="required">*</span></label>
-                        <input
-                            type="time"
-                            id="end_time"
-                            name="end_time"
-                            min="07:00"
-                            max="20:00"
-                            value="{{ old('end_time', '20:00') }}"
-                            required
-                        >
-                        <span class="field-hint">Batas Operasional: 07.00 - 20.00 WIB</span>
-                        @error('end_time')
-                            <span class="error-text">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="nama_pemohon">Nama Pemohon <span class="required">*</span></label>
-                    <input
-                        type="text"
-                        id="nama_pemohon"
-                        name="nama_pemohon"
-                        value="{{ old('nama_pemohon', auth()->user()->nama ?? '') }}"
-                        placeholder="Contoh: Max Verstappen"
-                        required
-                    >
-                    @error('nama_pemohon')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="instansi_pemohon">Instansi Pemohon <span class="required">*</span></label>
-                    <input
-                        type="text"
-                        id="instansi_pemohon"
-                        name="instansi_pemohon"
-                        value="{{ old('instansi_pemohon') }}"
-                        placeholder="Organisasi Mahasiswa (BEM/DPM/HMD)"
-                        required
-                    >
-                    @error('instansi_pemohon')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="nama_kegiatan">Nama Kegiatan <span class="required">*</span></label>
-                    <input
-                        type="text"
-                        id="nama_kegiatan"
-                        name="nama_kegiatan"
-                        value="{{ old('nama_kegiatan') }}"
-                        placeholder="Contoh: LKMMPD 2026"
-                        required
-                    >
-                    @error('nama_kegiatan')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="deskripsi_kegiatan">Deskripsi Singkat Kegiatan <span class="required">*</span></label>
-                    <textarea
-                        id="deskripsi_kegiatan"
-                        name="deskripsi_kegiatan"
-                        rows="2"
-                        placeholder="Contoh: Kegiatan ospek jurusan mahasiswa baru tahun 2026"
-                        required
-                    >{{ old('deskripsi_kegiatan') }}</textarea>
-                    @error('deskripsi_kegiatan')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="estimasi_peserta">Estimasi Jumlah Peserta (Maks. {{ $fasilitas->kapasitas }}) <span class="required">*</span></label>
-                    <input
-                        type="number"
-                        id="estimasi_peserta"
-                        name="jumlah_peserta"
-                        min="1"
-                        max="500"
-                        value="{{ old('estimasi_peserta') }}"
-                        required
-                    >
-                    @error('jumlah_peserta')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Surat Peminjaman Ruangan <span class="required">*</span></label>
-                    <div class="dropzone" data-dropzone-for="surat_peminjaman">
-                        <input type="file" id="surat_peminjaman" name="surat_peminjaman" accept="application/pdf" hidden required>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 13L10.5 15.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                        <p>Tarik dokumen ke sini atau <span class="dropzone-link">Jelajahi Berkas</span></p>
-                        <span class="dropzone-hint">Mendukung format pdf (Maksimal 5 MB)</span>
-                        <span class="dropzone-filename"></span>
-                    </div>
-                    @error('surat_peminjaman')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Proposal Kegiatan</label>
-                    <div class="dropzone" data-dropzone-for="proposal_kegiatan">
-                        <input type="file" id="proposal_kegiatan" name="proposal_kegiatan" accept="application/pdf" hidden>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 13L10.5 15.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                        <p>Tarik dokumen ke sini atau <span class="dropzone-link">Jelajahi Berkas</span></p>
-                        <span class="dropzone-hint">Mendukung format pdf (Maksimal 5 MB)</span>
-                        <span class="dropzone-filename"></span>
-                    </div>
-                    @error('proposal_kegiatan')
-                        <span class="error-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn-submit">
-                    Ajukan Reservasi
-                </button>
-
-                <p class="form-footnote">
-                    <span class="required">*</span>Catatan: Pembatalan reservasi hanya dapat dilakukan maksimal 3 hari (H-3) sebelum tanggal kegiatan.
-                </p>
-            </form>
         </section>
 
     </main>

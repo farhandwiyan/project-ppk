@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("lokasi", 50)->nullable(false);
             $table->text("deskripsi");
             $table->integer("kapasitas", false, true);
+            $table->enum("status", ["aktif", "dalam_perbaikan", "nonaktif"])->default("aktif");
             $table->foreignId('created_by')
                 ->nullable()
                 ->constrained('users')
