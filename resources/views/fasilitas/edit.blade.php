@@ -25,6 +25,11 @@
                     <div class="alert-error">{{ session('error') }}</div>
                 @endif
 
+                {{-- BARU: notifikasi sukses (dipakai juga setelah ubah status di bawah) --}}
+                @if (session('success'))
+                    <div class="alert-success">{{ session('success') }}</div>
+                @endif
+
                 <form action="{{ route('fasilitas.update', $fasilitas->id) }}" method="POST" class="admin-form">
                     @csrf
                     @method('PUT')
@@ -87,7 +92,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="kapasitas">Kapasitas (orang)</label>
+                        {{-- BARU: label kapasitas dinamis sesuai tipe (orang vs unit) --}}
+                        <label for="kapasitas">
+                            Kapasitas ({{ strtolower($fasilitas->tipe_fasilitas) === 'alat' ? 'unit' : 'orang' }})
+                        </label>
                         <input
                             type="number"
                             id="kapasitas"
@@ -117,6 +125,50 @@
                         <a href="{{ route('fasilitas.index') }}" class="btn-secondary">Batal</a>
                     </div>
                 </form>
+
+                {{-- ========== BARU: Section Status Fasilitas ========== --}}
+                <hr class="section-divider">
+
+                <div class="status-zone">
+                    <div class="status-zone-info">
+                        <h3>Status Fasilitas</h3>
+                        <p>
+                            Status saat ini:
+                            <span class="badge-status {{ match($fasilitas->status ?? 'aktif') {
+                                'aktif' => 'badge-status-aktif',
+                                'dalam_perbaikan' => 'badge-status-perbaikan',
+                                'nonaktif' => 'badge-status-nonaktif',
+                                default => 'badge-status-aktif',
+                            } }}">
+                                {{ match($fasilitas->status ?? 'aktif') {
+                                    'aktif' => 'Aktif',
+                                    'dalam_perbaikan' => 'Dalam Perbaikan',
+                                    'nonaktif' => 'Nonaktif',
+                                    default => 'Aktif',
+                                } }}
+                            </span>
+                        </p>
+                        <p class="status-zone-hint">
+                            Fasilitas berstatus "Dalam Perbaikan" atau "Nonaktif" tidak dapat direservasi oleh user.
+                        </p>
+                    </div>
+
+                    <form action="{{ route('fasilitas.update-status', $fasilitas->id) }}" method="POST" class="status-zone-form">
+                        @csrf
+                        @method('PATCH')
+
+                        <select name="status" id="status-select">
+                            <option value="aktif" {{ ($fasilitas->status ?? 'aktif') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                            <option value="dalam_perbaikan" {{ ($fasilitas->status ?? 'aktif') == 'dalam_perbaikan' ? 'selected' : '' }}>Dalam Perbaikan</option>
+                            <option value="nonaktif" {{ ($fasilitas->status ?? 'aktif') == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                        </select>
+                        @error('status')
+                            <span class="error-text">{{ $message }}</span>
+                        @enderror
+
+                        <button type="submit" class="btn-primary">Ubah Status</button>
+                    </form>
+                </div>
 
                 <hr class="danger-divider">
 

@@ -17,8 +17,24 @@ class Fasilitas extends Model
         'lokasi',
         'deskripsi',
         'kapasitas',
+        'status',
         'created_by',
     ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'fasilitas_id');
+    }
+
+    public function isAlat(): bool
+    {
+        return strtolower($this->tipe_fasilitas) === 'alat';
+    }
+
+    public function bisaDireservasi(): bool
+    {
+        return $this->status === 'aktif';
+    }
 
     protected $casts = [
         'kapasitas' => 'integer',

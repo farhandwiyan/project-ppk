@@ -23,6 +23,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Gedung A Lantai 3',
                 'kapasitas' => 40,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -31,6 +32,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Gedung A Lantai 3',
                 'kapasitas' => 40,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -39,6 +41,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Gedung A Lantai 3',
                 'kapasitas' => 40,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -47,6 +50,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Gedung Acintya Prasada Lantai 6',
                 'kapasitas' => 100,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -55,6 +59,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Lapangan Voli Fakultas Sains dan Matematika',
                 'kapasitas' => 20,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -63,6 +68,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Lab komputer Departemen Informatika',
                 'kapasitas' => 35,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -71,6 +77,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Fakultas Sains dan Matematika',
                 'deskripsi' => 'Sound sistem milik Fakultas Sains dan Matematika',
                 'kapasitas' => 10,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
             [
@@ -79,6 +86,7 @@ class FasilitasSeeder extends Seeder
                 'lokasi' => 'Muladi Dome',
                 'deskripsi' => 'Gedung serba guna Universitas Diponegoro',
                 'kapasitas' => 4500,
+                'status' => 'aktif',
                 'created_by' => $adminId,
             ],
         ];

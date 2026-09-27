@@ -35,22 +35,36 @@ class StoreReservationRequest extends FormRequest
     public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            $fasilitas = Fasilitas::find($this->fasilitas_id);
-            if ($fasilitas && $this->jumlah_peserta > $fasilitas->kapasitas) {
-                $validator->errors()->add(
-                    'jumlah_peserta',
-                    "Jumlah peserta melebihi kapasias fasilitas ({$fasilitas->kapasitas} orang)"
-                );
+            $facility = Fasilitas::find($this->fasilitas_id);
+            if (!$facility) {
+                return;
+            }
+ 
+            if ($this->jumlah_peserta > $facility->kapasitas) {
+                $pesan = $facility->isAlat()
+                    ? "Jumlah unit melebihi stok yang tersedia ({$facility->kapasitas} unit)."
+                    : "Jumlah peserta melebihi kapasitas fasilitas ({$facility->kapasitas} orang).";
+ 
+                $validator->errors()->add('jumlah_peserta', $pesan);
+            }
+ 
+            if (!$facility->bisaDireservasi()) {
+                $pesan = $facility->status === 'dalam_perbaikan'
+                    ? 'Fasilitas ini sedang dalam perbaikan dan tidak dapat direservasi saat ini.'
+                    : 'Fasilitas ini sedang tidak aktif dan tidak dapat direservasi.';
+ 
+                $validator->errors()->add('fasilitas_id', $pesan);
             }
         });
     }
 
+
     public function messages(): array
     {
         return [
-            'surat_peminjaman.required' => 'Surat peminjaman ruangan wajib diunggah',
-            'surat_peminjaman.mimes' => 'Surat peminjaman harus berformat PDF/JPG/PNG',
-            'proposal_kegiatan.mimes' => 'Proposal kegiatan harus berformat PDF',
+            'surat_peminjaman.required' => 'Surat peminjaman ruangan wajib diunggah.',
+            'surat_peminjaman.mimes' => 'Surat peminjaman harus berformat PDF/JPG/PNG.',
+            'proposal_kegiatan.mimes' => 'Proposal kegiatan harus berformat PDF.',
         ];
     }
 }

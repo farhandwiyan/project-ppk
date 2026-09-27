@@ -99,18 +99,18 @@
                     };
 
                     // Status → kelas badge. Sesuaikan dengan sumber data status Anda yang sebenarnya.
-                    $statusClass = match ($item->status ?? 'tersedia') {
-                        'tersedia'         => 'badge-status-tersedia',
-                        'terpakai'         => 'badge-status-terpakai',
+                    $statusClass = match ($item->status ?? 'aktif') {
+                        'aktif'         => 'badge-status-tersedia',
+                        'nonaktif'         => 'badge-status-terpakai',
                         'dalam_perbaikan'  => 'badge-status-perbaikan',
                         default            => 'badge-status-tersedia',
                     };
 
                     $statusLabel = match ($item->status ?? 'tersedia') {
-                        'tersedia'         => 'Tersedia',
-                        'terpakai'         => 'Terpakai',
+                        'aktif'         => 'Tersedia',
+                        'nonaktif'         => 'Nonaktif',
                         'dalam_perbaikan'  => 'Dalam Perbaikan',
-                        default            => 'tersedia',
+                        default            => 'Tersedia',
                     };
                 @endphp
 

@@ -13,7 +13,7 @@ class FasilitasController extends Controller
         $filterTipe = $request->input('filter_tipe');
         $filterLokasi = $request->input('filter_lokasi');
 
-        $fasilitas = Fasilitas::select('id', 'nama', 'tipe_fasilitas', 'lokasi', 'kapasitas')
+        $fasilitas = Fasilitas::select('id', 'nama', 'tipe_fasilitas', 'lokasi', 'kapasitas', 'status')
         ->when($search, function ($query, $search) {
             $query->where('nama', 'like', '%' . $search . '%');
         })
@@ -61,7 +61,14 @@ class FasilitasController extends Controller
 
         $validated['created_by'] = Auth::user()->id;
 
-        Fasilitas::create($validated);
+        Fasilitas::create([
+            'nama' => $request->nama,
+            'tipe_fasilitas' => $request->tipe_fasilitas,
+            'lokasi' => $request->lokasi,
+            'deskripsi' => $request->deskripsi,
+            'kapastias' => $request->kapasitas,
+            'status' => 'aktif',
+        ]);
 
         return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil ditambahkan.');
     }
@@ -100,6 +107,17 @@ class FasilitasController extends Controller
         return redirect()
             ->route('fasilitas.index')
             ->with('success', 'Fasilitas berhasil diperbarui.');
+    }
+
+    public function updateStatus(Request $request, Fasilitas $fasilitas)
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'in:aktif,dalam_perbaikan,nonaktif'],
+        ]);
+ 
+        $fasilitas->update(['status' => $validated['status']]);
+ 
+        return back()->with('success', "Status fasilitas '{$fasilitas->nama}' diubah menjadi {$validated['status']}.");
     }
 
     public function delete(Fasilitas $fasilitas)

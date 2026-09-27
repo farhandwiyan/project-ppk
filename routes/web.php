@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/fasilitas/{fasilitas}/edit', [FasilitasController::class, 'showEditForm'])->name('fasilitas.edit');
         Route::put('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'update'])->name('fasilitas.update');
         Route::delete('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'delete'])->name('fasilitas.delete');
+        Route::patch('admin/fasilitas/{fasilitas}/status', [FasilitasController::class, 'updateStatus'])->name('fasilitas.update-status');
     });
 
     // role: petugas
@@ -59,5 +60,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/reservasi/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
     
         Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
+        Route::delete('/reservasi/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
     });
 });
