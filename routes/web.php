@@ -8,6 +8,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PetugasDashboardController;
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/fasilitas', [FasilitasPublicController::class, 'index'])->name('fasilitas-public.index');
@@ -50,7 +53,11 @@ Route::middleware('auth')->group(function () {
 
     // role: petugas
     Route::middleware('role:petugas')->group(function () {
-        Route::get('petugas/dashboard', [DashboardController::class, 'homePetugas'])->name('petugas.home');
+        Route::get('petugas/dashboard', [PetugasDashboardController::class, 'index'])->name('petugas.home');
+        Route::get('petugas/reservasi/{id}', [PetugasDashboardController::class, 'show'])->name('petugas.reservasi.show');
+        
+        Route::patch('petugas/reservasi/{id}/setuju', [PetugasDashboardController::class, 'setuju'])->name('petugas.reservasi.setuju');
+        Route::patch('petugas/reservasi/{id}/tolak', [PetugasDashboardController::class, 'tolak'])->name('petugas.reservasi.tolak');
     });
 
     // role: user
