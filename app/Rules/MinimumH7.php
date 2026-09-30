@@ -7,15 +7,15 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
-class MinimumH2 implements ValidationRule
+class MinimumH7 implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, \Closure $fail): void
     {
         $tanggalReservasi = Carbon::parse($value)->startOfDay();
-        $batasMinimal = Carbon::today()->addDays(2);
+        $batasMinimal = Carbon::today()->addDays(7);
 
         if ($tanggalReservasi->lt($batasMinimal)) {
-            $fail('Reservasi hanya bisa diajukan minimal H-2');
+            $fail('Reservasi hanya bisa diajukan minimal H-7');
         }
     }
 }

@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/reservasi/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
     
         Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
-        Route::delete('/reservasi/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+        Route::get('reservasi/{reservation}', [ReservationController::class, 'showDetail'])->name('reservations.detail');
+        Route::patch('/reservasi/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
     });
 });

@@ -14,10 +14,10 @@ class FasilitasPublicController extends Controller
         $filterLokasi = $request->input('filter_lokasi');
         $filterTipe   = $request->input('filter_tipe');
 
-        // Default tanggal: H+1 dari hari ini, kecuali user sudah memilih tanggal lain
+        // Default tanggal: H+7 dari hari ini, kecuali user sudah memilih tanggal lain
         $tanggalTerpilih = $request->filled('tanggal')
             ? Carbon::parse($request->input('tanggal'))
-            : Carbon::tomorrow();
+            : Carbon::today()->addDays(7);
 
         $fasilitas = Fasilitas::query()
             ->when($search, function ($query, $search) {
