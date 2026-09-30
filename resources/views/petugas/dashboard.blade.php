@@ -20,9 +20,14 @@
             </div>
             <nav class="px-4 space-y-3">
                 <a href="{{ route('petugas.home') ?? '#' }}" class="flex items-center px-4 py-3 bg-sidebar-active rounded-lg text-sm text-gray-100 font-medium">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
                     Antrean Reservasi Fasilitas
                 </a>
+
+                <!-- MENU BARU: Riwayat Reservasi -->
+                <a href="{{ route('petugas.riwayat') }}" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
+                    Riwayat Reservasi
+                </a>
+
                 <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
                     Laporan Kerusakan
                 </a>
@@ -129,70 +134,68 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
                     <thead>
-        <tr class="bg-gray-200 text-gray-600">
-            <!-- Kolom disesuaikan permintaannmu -->
-            <th class="p-4 font-semibold text-left">Pemohon</th>
-            <th class="p-4 font-semibold text-left">Instansi</th>
-            <th class="p-4 font-semibold text-left">Fasilitas</th>
-            <th class="p-4 font-semibold text-left">Tanggal & Durasi</th>
-            <th class="p-4 font-semibold w-1/6">Status</th>
-            <th class="p-4 font-semibold text-center">Aksi</th>
-        </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-100">
-        @forelse($reservations as $res)
-        <tr class="hover:bg-gray-50">
-            <!-- 1. Kolom Pemohon (Tanpa Kode RSV) -->
-            <td class="p-4 align-top">
-                <div class="font-bold text-gray-900">{{ $res->nama_pemohon }}</div>
-            </td>
-            
-            <!-- 2. Kolom Instansi (Kolom Baru Terpisah) -->
-            <td class="p-4 align-top">
-                <div class="text-gray-600 text-sm">{{ $res->instansi_pemohon }}</div>
-            </td>
-            
-            <!-- 3. Kolom Fasilitas (Tanpa Deskripsi) -->
-            <td class="p-4 align-top">
-                <div class="font-bold text-gray-900">{{ $res->fasilitas->nama ?? 'Nama Fasilitas' }}</div>
-            </td>
-            
-            <!-- 4. Kolom Tanggal & Jam -->
-            <td class="p-4 align-top">
-                <div class="font-medium text-gray-900 mb-1">{{ \Carbon\Carbon::parse($res->tanggal)->format('d M Y') }}</div>
-                <div class="text-gray-500 text-xs">
-                    {{ \Carbon\Carbon::parse($res->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('H:i') }} WIB
-                </div>
-            </td>
-            
-            <!-- 5. Kolom Status -->
-            <td class="p-4 align-middle">
-                @php
-                    $badgeColor = match(strtolower($res->status)) {
-                        'disetujui' => 'bg-green-100 text-green-700',
-                        'ditolak'   => 'bg-red-100 text-red-700',
-                        default     => 'bg-orange-100 text-orange-600',
-                    };
-                @endphp
-                <span class="{{ $badgeColor }} px-4 py-1.5 rounded text-xs font-semibold uppercase">
-                    {{ $res->status }}
-                </span>
-            </td>
-            
-            <!-- 6. Kolom Aksi -->
-            <td class="p-4 align-middle text-center">
-                <a href="{{ route('petugas.reservasi.show', $res->id) }}" class="px-4 py-2 text-xs border border-gray-300 text-gray-700 rounded hover:bg-gray-100 font-medium inline-block">
-                    Lihat Detail
-                </a>
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <!-- Colspan diubah jadi 6 karena kolomnya bertambah -->
-            <td colspan="6" class="p-8 text-center text-gray-500">Belum ada data reservasi.</td>
-        </tr>
-        @endforelse
-    </tbody>
+                        <tr class="bg-gray-200 text-gray-600">
+                            <th class="p-4 font-semibold text-left">Pemohon</th>
+                            <th class="p-4 font-semibold text-left">Instansi</th>
+                            <th class="p-4 font-semibold text-left">Fasilitas</th>
+                            <th class="p-4 font-semibold text-left">Tanggal & Durasi</th>
+                            <th class="p-4 font-semibold w-1/6">Status</th>
+                            <th class="p-4 font-semibold text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($reservations as $res)
+                        <tr class="hover:bg-gray-50">
+                            <!-- 1. Kolom Pemohon -->
+                            <td class="p-4 align-top">
+                                <div class="font-bold text-gray-900">{{ $res->nama_pemohon }}</div>
+                            </td>
+                            
+                            <!-- 2. Kolom Instansi -->
+                            <td class="p-4 align-top">
+                                <div class="text-gray-600 text-sm">{{ $res->instansi_pemohon }}</div>
+                            </td>
+                            
+                            <!-- 3. Kolom Fasilitas -->
+                            <td class="p-4 align-top">
+                                <div class="font-bold text-gray-900">{{ $res->fasilitas->nama ?? 'Nama Fasilitas' }}</div>
+                            </td>
+                            
+                            <!-- 4. Kolom Tanggal & Jam -->
+                            <td class="p-4 align-top">
+                                <div class="font-medium text-gray-900 mb-1">{{ \Carbon\Carbon::parse($res->tanggal)->format('d M Y') }}</div>
+                                <div class="text-gray-500 text-xs">
+                                    {{ \Carbon\Carbon::parse($res->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('H:i') }} WIB
+                                </div>
+                            </td>
+                            
+                            <!-- 5. Kolom Status -->
+                            <td class="p-4 align-middle">
+                                @php
+                                    $badgeColor = match(strtolower($res->status)) {
+                                        'disetujui' => 'bg-green-100 text-green-700',
+                                        'ditolak'   => 'bg-red-100 text-red-700',
+                                        default     => 'bg-orange-100 text-orange-600',
+                                    };
+                                @endphp
+                                <span class="{{ $badgeColor }} px-4 py-1.5 rounded text-xs font-semibold uppercase">
+                                    {{ $res->status }}
+                                </span>
+                            </td>
+                            
+                            <!-- 6. Kolom Aksi -->
+                            <td class="p-4 align-middle text-center">
+                                <a href="{{ route('petugas.reservasi.show', $res->id) }}" class="px-4 py-2 text-xs border border-gray-300 text-gray-700 rounded hover:bg-gray-100 font-medium inline-block">
+                                    Lihat Detail
+                                </a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-gray-500">Belum ada data reservasi.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
                 </table>
             </div>
         </div>

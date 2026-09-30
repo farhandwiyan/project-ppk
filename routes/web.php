@@ -58,6 +58,9 @@ Route::middleware('auth')->group(function () {
         
         Route::patch('petugas/reservasi/{id}/setuju', [PetugasDashboardController::class, 'setuju'])->name('petugas.reservasi.setuju');
         Route::patch('petugas/reservasi/{id}/tolak', [PetugasDashboardController::class, 'tolak'])->name('petugas.reservasi.tolak');
+
+        Route::get('petugas/riwayat', [PetugasDashboardController::class, 'riwayat'])->name('petugas.riwayat');
+        Route::delete('petugas/riwayat/{id}', [PetugasDashboardController::class, 'destroyRiwayat'])->name('petugas.riwayat.destroy');
     });
 
     // role: user
