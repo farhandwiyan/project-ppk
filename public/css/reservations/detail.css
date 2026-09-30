@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f9;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1a1a1a;;
+}
+
+/* ===== Page Content ===== */
+.page-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+}
+
+/* ===== Alert ===== */
+.alert-error {
+    margin-bottom: 1.5rem;
+    background-color: #fdecea;
+    color: #c0392b;
+    border: 1px solid #f5c6cb;
+    padding: 0.9rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* ===== Reservasi Card ===== */
+.reservasi-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e2ef;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ===== Header ===== */
+.reservasi-header {
+    padding: 1.8rem 2.2rem;
+    border-bottom: 1px solid #eee;
+    background-color: #ffffff;
+}
+
+.reservasi-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a4b;
+    margin-bottom: 0.5rem;
+}
+
+.reservasi-header p {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.reservasi-header strong {
+    color: #1a1a4b;
+}
+
+/* ===== Detail Content ===== */
+.reservasi-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 1.5rem 2.2rem 2.2rem;
+}
+
+/* Setiap baris informasi */
+.reservasi-form > p {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.reservasi-form > p:last-of-type {
+    border-bottom: none;
+}
+
+.reservasi-form > p strong {
+    color: #1a1a4b;
+    font-weight: 600;
+}
+
+/* ===== Link Berkas ===== */
+.reservasi-form a {
+    color: #1a1a4b;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.reservasi-form a:hover {
+    color: #12122b;
+}
+
+/* ===== Alasan Pembatalan / Penolakan ===== */
+.reservasi-form > p:has(strong:first-child) {
+    /* Tetap mempertahankan layout informasi */
+}
+
+/* ===== Button Area ===== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* ===== Button ===== */
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+
+    width: 100%;
+    background-color: #12122b;
+    color: #ffffff;
+
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+    background-color: #1a1a4b;
+}
+
+.btn-submit:active {
+    transform: scale(0.99);
+}
+
+/* Tombol disabled */
+.btn-submit:disabled {
+    background-color: #c9c9c9 !important;
+    color: #666 !important;
+    cursor: not-allowed !important;
+    transform: none;
+}
+
+/* ===== Hint ===== */
+.field-hint {
+    font-size: 0.78rem;
+    color: #999;
+    line-height: 1.5;
+}
+
+/* ===== SweetAlert tambahan ===== */
+.swal2-popup {
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    border-radius: 12px !important;
+}
+
+.swal2-title {
+    color: #1a1a4b !important;
+}
+
+.swal2-confirm {
+    border-radius: 8px !important;
+}
+
+.swal2-cancel {
+    border-radius: 8px !important;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+
+    .page-content {
+        padding: 6rem 1rem 2rem;
+    }
+
+    .reservasi-header {
+        padding: 1.4rem 1.3rem;
+    }
+
+    .reservasi-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .reservasi-form {
+        padding: 1.2rem 1.3rem 1.5rem;
+    }
+
+    .reservasi-form > p {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.85rem 0;
+    }
+
+    .form-group {
+        margin-top: 0.8rem;
+    }
+
+    .btn-submit {
+        font-size: 0.9rem;
+    }
+}
+

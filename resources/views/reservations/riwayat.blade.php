@@ -35,7 +35,7 @@
 
     <main class="page-content">
 
-        
+
         <!-- ===== Riwayat Peminjaman ===== -->
         <section class="riwayat-section">
             <div class="section-card">
@@ -139,7 +139,6 @@
                                         'dibatalkan' => 'badge-ditolak',
                                         default      => 'badge-diproses',
                                     };
-                                    $bisaDibatalkan = in_array($item->status, ['diproses', 'disetujui']);
                                 @endphp
                                 <tr>
                                     <td>{{ $loop->iteration + ($reservations->currentPage() - 1) * $reservations->perPage() }}</td>
@@ -154,16 +153,7 @@
                                         </span>
                                     </td>
                                     <td class="col-aksi">
-                                        <a href="{{ route('reservations.show', $item->id) }}" class="btn-outline-sm">Lihat Detail</a>
-                                        <!-- fitur tambah nanti -->
-                                        @if ($bisaDibatalkan)
-                                            <form action="{{ route('reservations.cancel', $item->id) }}" method="POST" class="inline-form"
-                                                  onsubmit="return confirm('Batalkan peminjaman ini?');">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn-danger-sm">Batalkan</button>
-                                            </form>
-                                        @endif
+                                        <a href="{{ route('reservations.detail', $item->id) }}" class="btn-outline-sm">Lihat Detail</a>
                                     </td>
                                 </tr>
                             @empty
@@ -257,5 +247,6 @@
     <script>
         feather.replace();
     </script>
+
 </body>
 </html>

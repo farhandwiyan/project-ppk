@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Exceptions\PembatalanTidakDiizinkanException;
 use App\Models\Reservation;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -71,13 +72,23 @@ class ReservationService
         ]);
     }
 
-    public function batalkanOlehUser(Reservation $reservation): void
+    public function batalkanOlehUser(Reservation $reservation, string $alasan)
     {
+        if (!$reservation->bisaDibatalkanOlehUser()) {
+            throw new PembatalanTidakDiizinkanException (
+                'Reservasi hanya dapat dibatalkan maksimal H-7 sebelum jadwal kegiatan.'
+            );
+        }
+ 
         $reservation->update([
             'status' => 'dibatalkan',
             'dibatalkan_oleh' => 'user',
+            'alasan_pembatalan' => $alasan,
         ]);
+
+        return $reservation->fresh();
     }
+
 
     public function batalkanOlehPetugas(Reservation $reservation, int $petugasId, string $alasan): void
     {
@@ -118,6 +129,4 @@ class ReservationService
             }
         }
     }
-
-
 }
