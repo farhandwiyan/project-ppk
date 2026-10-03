@@ -9,6 +9,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetugasDashboardController;
+use App\Http\Controllers\LaporanKerusakanController;
 
 
 
@@ -61,6 +62,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // role: user
+    
     Route::middleware('role:user')->group(function () {
         Route::get('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'showCreateForm'])->name('reservations.create');
         Route::post('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'create'])->name('reservations.store');
@@ -68,5 +70,8 @@ Route::middleware('auth')->group(function () {
     
         Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
         Route::delete('/reservasi/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+
+        Route::get('/laporan-kerusakan', [LaporanKerusakanController::class, 'create'])->name('laporan.create');
+        Route::post('/laporan-kerusakan', [LaporanKerusakanController::class, 'store'])->name('laporan.store');
     });
 });

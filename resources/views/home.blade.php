@@ -22,9 +22,21 @@
 
         <div class="navbar-nav">
             <a href="#home">Beranda</a>
-            <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
-            <a href="#prosedur">Panduan</a>
-            <a id="button-login" href="{{ route('login') }}">Login</a>
+
+            @auth
+                <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a>
+                <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
+                <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
+
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" id="button-login">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
+                <a id="button-login" href="{{ route('login') }}">Login</a>
+            @endauth
+
             <a href="" id="hamburger-menu"><i data-feather="menu"></i></a>
         </div>
      </nav>
