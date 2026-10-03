@@ -28,7 +28,7 @@
     <!-- Menu Khusus Pengguna Login -->
     @auth
         <!-- Link kosong untuk form Claudia yang belum jadi -->
-        <a href="#">Laporan Kerusakan</a> 
+        <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a> 
         <a href="{{ route('reservations.riwayat') }}" class="active">Riwayat</a>
     @endauth
 
@@ -200,6 +200,165 @@
                             @empty
                                 <tr>
                                     <td colspan="7" class="empty-note">Belum ada riwayat peminjaman.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                @if ($reservations->hasPages())
+                    <div class="riwayat-pagination">
+                        @if ($reservations->onFirstPage())
+                            <span class="disabled">&laquo; Prev</span>
+                        @else
+                            <a href="{{ $reservations->previousPageUrl() }}">&laquo; Prev</a>
+                        @endif
+
+                        @for ($page = 1; $page <= $reservations->lastPage(); $page++)
+                            @if ($page == $reservations->currentPage())
+                                <span class="active">{{ $page }}</span>
+                            @else
+                                <a href="{{ $reservations->url($page) }}">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if ($reservations->hasMorePages())
+                            <a href="{{ $reservations->nextPageUrl() }}">Next &raquo;</a>
+                        @else
+                            <span class="disabled">Next &raquo;</span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <!-- ===== Riwayat Laporan ===== -->
+        <section class="riwayat-section">
+            <div class="section-card">
+                <h1>Riwayat Laporan</h1>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Laporan</span>
+                        <div class="stat-row">
+                            <span class="stat-value">{{ $laporanStats['total'] ?? 0 }}</span>
+                            <span class="stat-pill">Laporan</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Sedang Diproses</span>
+                        <div class="stat-row">
+                            <span class="stat-value">{{ $laporanStats['diproses'] ?? 0 }}</span>
+                            <span class="stat-pill-pending">Laporan</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Selesai</span>
+                        <div class="stat-row">
+                            <span class="stat-value">{{ $laporanStats['selesai'] ?? 0 }}</span>
+                            <span class="stat-pill-complete">Laporan</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Ditolak</span>
+                        <div class="stat-row">
+                            <span class="stat-value">{{ $laporanStats['ditolak'] ?? 0 }}</span>
+                            <span class="stat-pill stat-pill-danger">Laporan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+
+                <!-- Filter -->
+                <form method="GET" action="{{ route('reservations.riwayat') }}" class="riwayat-filter-form">
+                    <div class="filter-search-wrapper">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        <input
+                            type="text"
+                            name="search_laporan"
+                            value="{{ request('search_laporan') }}"
+                            placeholder="Cari laporan..."
+                        >
+                    </div>
+
+                    <select name="filter_jenis_fasilitas">
+                        <option value="">Jenis Fasilitas</option>
+                        @foreach ($tipeOptions ?? [] as $tipe)
+                            <option value="{{ $tipe }}" {{ request('filter_jenis_laporan') == $tipe ? 'selected' : '' }}>{{ $tipe }}</option>
+                        @endforeach
+                    </select>
+
+                    <select name="filter_status_laporan">
+                        <option value="">Status</option>
+                        <option value="menunggu" {{ request('filter_status_laporan') == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                        <option value="disetujui" {{ request('filter_status_laporan') == 'selesai' ? 'selected' : '' }}>Disetujui</option>
+                        <option value="ditolak" {{ request('filter_status_laporan') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+
+                    <div class="filter-date-wrapper">
+                        <svg class="calendar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 9H21" stroke="currentColor" stroke-width="1.6"/><path d="M8 3V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 3V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <input type="date" name="tanggal_laporan" value="{{ request('tanggal_laporan') }}">
+                    </div>
+
+                    <button type="submit" class="btn-filter">Filter</button>
+                </form>
+
+                <!-- Tabel Peminjaman -->
+                <div class="riwayat-table-wrapper">
+                    <table class="riwayat-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Fasilitas</th>
+                                <th>Foto</th>
+                                <th>Waktu</th>
+                                <th>Deskripsi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($laporans as $laporan)
+                                @php
+                                    $statusClass = match ($laporan->status) {
+                                        'diproses'   => 'badge-diproses',
+                                        'selesai'    => 'badge-selesai',
+                                        'ditolak'    => 'badge-ditolak',
+                                        default      => 'badge-diproses',
+                                    };
+                                @endphp
+                                <tr>
+                                    <td>{{ $loop->iteration + ($reservations->currentPage() - 1) * $reservations->perPage() }}</td>
+                                    <td class="col-fasilitas">{{ $laporan->fasilitas->nama ?? '-' }}</td>
+                                    <td>
+                                        @php 
+                                            $fotos = $laporan->bukti_kerusakan;
+                                            if (is_string($fotos)) {
+                                                $fotos = json_decode($fotos, true);
+                                            }
+                                        @endphp
+
+                                        {{ is_array($fotos) ? count($fotos) : 0}}
+                                    </td>
+                                    <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
+                                    <td class="col-deskripsi">{{ Str::limit($laporan->deskripsi, 40) }}</td>
+                                    <td>
+                                        <span class="status-badge {{ $statusClass }}">
+                                            {{ ucfirst($laporan->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="col-aksi">
+                                        <a href="{{ route('laporan.show', $laporan->id) }}" class="btn-outline-sm">Lihat Detail</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="empty-note">Belum ada riwayat laporan.</td>
                                 </tr>
                             @endforelse
                         </tbody>

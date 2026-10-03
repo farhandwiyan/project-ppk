@@ -31,7 +31,7 @@
 
         <!-- Tampil jika pengguna SUDAH login -->
         @auth
-            <a href="#">Laporan Kerusakan</a> 
+            <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a> 
             <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
 
             <!-- Tombol Logout -->
