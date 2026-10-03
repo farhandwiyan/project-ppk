@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fasilitas;
 use App\Models\LaporanKerusakan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class LaporanKerusakanController extends Controller
 {
@@ -22,7 +23,7 @@ class LaporanKerusakanController extends Controller
             'jenis' => 'required|string',
             'fasilitas_id' => ['required', Rule::exists('fasilitas', 'id')->where(function ($query) use ($request) {
                 $query->where('lokasi', $request->lokasi)
-                ->where('jenis', $request->jenis);
+                ->where('tipe_fasilitas', $request->jenis);
                 }),
             ],
             'nama_pelapor' => 'required|string|max:25',
@@ -50,5 +51,16 @@ class LaporanKerusakanController extends Controller
         return redirect()
         ->route('laporan.create')
         ->with('success', 'Laporan kerusakan berhasil dikirim.');
+    }
+
+    public function show(LaporanKerusakan $laporan)
+    {
+        if ($laporan->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $laporan->load('fasilitas');
+
+        return view('laporan.detail', compact('laporan'));
     }
 }

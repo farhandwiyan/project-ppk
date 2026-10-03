@@ -6,6 +6,7 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Models\Fasilitas;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Models\LaporanKerusakan;
 use App\Services\ReservationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -85,9 +86,21 @@ class ReservationController extends Controller
         ];
  
         $tipeOptions = ['Ruangan', 'Aula', 'Lapangan Olahraga', 'Laboratorium', 'Alat'];
+
+        $laporans = LaporanKerusakan::with('fasilitas')
+        ->where('user_id', auth()->id())
+        ->latest()
+        ->get();
+
+        $laporanStats = [
+            'total' => $laporans->count(),
+            'diproses' => $laporans->where('status', 'diproses')->count(),
+            'selesai' => $laporans->where('status', 'selesai')->count(),
+            'ditolak' => $laporans->where('status', 'ditolak')->count(),
+        ];
  
         return view('reservations.riwayat', compact(
-            'reservations', 'peminjamanStats', 'tipeOptions'
+            'reservations', 'peminjamanStats', 'tipeOptions', 'laporans', 'laporanStats'
         ));
     }
 
