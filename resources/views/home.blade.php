@@ -30,7 +30,7 @@
 
     <!-- Tampil jika pengguna SUDAH login -->
         @auth
-            <a href="#">Laporan Kerusakan</a> 
+            <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a> 
             <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
             
             <!-- Ikon User Bulat Biru Tua -->
@@ -61,8 +61,8 @@
         </div>
         @endauth
 
-    <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
-</div>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
      </nav>
 
      <!-- Hero Section -->
@@ -190,7 +190,9 @@
     }
 
     window.addEventListener('click', function(e) {
-        var container = document.getElementById('profileContainer');
+        var container = document.getElementById('
+        
+        ');
         var menu = document.getElementById('profileDropdown');
         if (container && menu && !container.contains(e.target)) {
             menu.style.display = 'none';

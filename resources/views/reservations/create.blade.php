@@ -22,7 +22,7 @@
 
         <div class="navbar-nav">
             <a href="{{ route('home') }}">Beranda</a>
-            <a href="#">Laporan Kerusakan</a>
+            <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a>
             <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
             <!-- tambahkan nanti -->
             <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
