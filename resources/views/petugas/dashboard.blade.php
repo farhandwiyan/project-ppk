@@ -43,7 +43,7 @@
         <!-- Sidebar Footer (Logout) -->
         <div class="p-4 border-t border-gray-700">
             <!-- Sesuaikan dengan route logout milik temanmu -->
-            <form action="#" method="POST" class="w-full">
+            <form action="{{ route('logout') }}" method="POST" class="w-full">
                 @csrf
                 <button type="submit" class="w-full text-left px-4 py-3 text-sm text-[#E08F8F] hover:text-red-400 font-medium transition-colors">
                     Logout
@@ -125,10 +125,52 @@
                 <h2 class="text-2xl font-serif text-gray-800 mb-2">Antrean Verifikasi Reservasi Fasilitas</h2>
                 <p class="text-sm text-gray-500 mb-6"><span class="text-red-500 mr-1">*</span>Periksa Persyaratan Peminjaman</p>
                 
-                <div class="flex gap-4">
-                    <button class="px-5 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors">Filter Gedung</button>
-                    <button class="px-5 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors">Urutan Waktu Acara</button>
-                </div>
+                <div class="mb-4">
+    <form method="GET" action="{{ url()->current() }}" class="flex gap-4 mb-4">
+    
+    <!-- Dropdown Filter Tipe Fasilitas -->
+    <select name="tipe_fasilitas" onchange="this.form.submit()" 
+            class="px-5 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="">Semua Tipe Fasilitas</option>
+        @if(isset($daftarTipe))
+            @foreach($daftarTipe as $tipe)
+                <option value="{{ $tipe }}" {{ request('tipe_fasilitas') == $tipe ? 'selected' : '' }}>
+                    {{ ucfirst($tipe) }}
+                </option>
+            @endforeach
+        @endif
+    </select>
+
+    <!-- Dropdown Filter Lokasi -->
+    <select name="lokasi" onchange="this.form.submit()" 
+            class="px-5 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="">Semua Lokasi</option>
+        @if(isset($daftarLokasi))
+            @foreach($daftarLokasi as $lokasi)
+                <option value="{{ $lokasi }}" {{ request('lokasi') == $lokasi ? 'selected' : '' }}>
+                    {{ $lokasi }}
+                </option>
+            @endforeach
+        @endif
+    </select>
+
+    <!-- Dropdown Urutan Waktu Acara -->
+    <select name="sort" onchange="this.form.submit()" 
+            class="px-5 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Waktu Acara: Terbaru</option>
+        <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Waktu Acara: Terlama</option>
+    </select>
+
+    <!-- Tombol Reset -->
+    @if(request()->filled('tipe_fasilitas') || request()->filled('lokasi') || request()->filled('sort'))
+        <a href="{{ url()->current() }}" 
+           class="px-5 py-2 border border-red-200 bg-red-50 text-red-600 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors flex items-center">
+            Reset Filter
+        </a>
+    @endif
+
+</form>
+</div>
             </div>
 
             <div class="overflow-x-auto">

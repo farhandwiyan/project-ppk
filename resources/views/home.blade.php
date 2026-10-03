@@ -20,7 +20,7 @@
         </div>
 
         <div class="navbar-nav">
-            <a href="#home">Beranda</a>
+            <a href="#home" class="active">Beranda</a>
             <a href="{{ route('fasilitas-public.index') }}">Daftar Fasilitas</a>
 
     <!-- Tampil jika pengguna BELUM login -->
@@ -32,9 +32,6 @@
         @auth
             <a href="#">Laporan Kerusakan</a> 
             <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
-            
-            <!-- Tombol Logout -->
-            <div id="profileContainer" style="position: relative; display: inline-block; margin-left: 20px;">
             
             <!-- Ikon User Bulat Biru Tua -->
             <button onclick="toggleProfileMenu()" style="display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background-color: #17183B; border-radius: 50%; border: none; cursor: pointer; padding: 0;">

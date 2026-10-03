@@ -49,7 +49,7 @@ body {
     padding: 1rem 1.2rem;
 }
 
-.navbar-nav a:not(#profile-icon) {
+.navbar-nav a {
     text-decoration: none;
     margin: 0 1rem;
     color: #000;
@@ -59,20 +59,8 @@ body {
 }
 
 .navbar-nav a.active,
-.navbar-nav a:not(#profile-icon):hover {
+.navbar-nav a:hover {
     border-bottom-color: #1a1a4b;
-}
-
-#profile-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    background-color: #1a1a4b;
-    color: #ffffff;
-    border-radius: 50%;
-    margin-left: 1rem;
 }
 
 #hamburger-menu {

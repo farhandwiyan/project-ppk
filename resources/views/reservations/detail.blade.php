@@ -21,7 +21,12 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
+        <div class="btn-kembali">
+            <a href="{{ route('reservations.riwayat') }}" class="btn-secondary">&laquo; Kembali</a>
+        </div>
+        
         <section class="reservasi-card">
+
             <div class="reservasi-header">
                 <h2>{{ $reservation->nama_kegiatan }}</h2>
                 <p>Status:

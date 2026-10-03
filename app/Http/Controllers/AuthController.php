@@ -65,7 +65,7 @@ class AuthController extends Controller
                 }
             }
 
-            return redirect()->route('home')->with('success', 'Login berhasil!');
+            return redirect()->intended(route('home'))->with('success', 'Login berhasil!');
         }
 
         // jika gagal login
