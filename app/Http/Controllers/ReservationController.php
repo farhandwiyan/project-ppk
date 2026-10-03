@@ -20,7 +20,7 @@ class ReservationController extends Controller
     
         $tanggalTerpilih = $tanggalInput 
             ? Carbon::parse($tanggalInput) 
-            : now()->addDay();
+            : now()->addDays(7);
             
         return view('reservations.create', [
             'fasilitas'       => $fasilitas,
@@ -89,6 +89,23 @@ class ReservationController extends Controller
         return view('reservations.riwayat', compact(
             'reservations', 'peminjamanStats', 'tipeOptions'
         ));
+    }
+
+    public function showDetail($id) {
+        $reservation = Reservation::findOrFail($id);
+
+        return view('reservations.detail', compact('reservation'));
+    }
+
+    public function cancel(Request $request, Reservation $reservation) {
+        abort_unless($reservation->user_id === Auth::id(), 403);
+
+        $reservation = $this->service->batalkanOlehUser(
+            $reservation, 
+            $request->alasan
+        );
+
+        return redirect()->route('reservations.riwayat')->with('success', 'Reservasi berhasil dibatalkan');
     }
 
 }

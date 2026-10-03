@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Fasilitas;
-use App\Rules\MinimumH2;
+use App\Rules\MinimumH7;
 use App\Rules\ValidTimeSlot;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,7 +23,7 @@ class StoreReservationRequest extends FormRequest
             'deskripsi_kegiatan' => ['required', 'string', 'max:1000'],
             'jumlah_peserta' => ['required', 'integer', 'min:1'],
 
-            'tanggal' => ['required', 'date', new MinimumH2],
+            'tanggal' => ['required', 'date', new MinimumH7],
             'start_time' => ['required', 'date_format:H:i', new ValidTimeSlot],
             'end_time' => ['required', 'date_format:H:i', 'after:start_time', new ValidTimeSlot],
 

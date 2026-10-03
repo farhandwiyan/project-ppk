@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
         
         Route::patch('petugas/reservasi/{id}/setuju', [PetugasDashboardController::class, 'setuju'])->name('petugas.reservasi.setuju');
         Route::patch('petugas/reservasi/{id}/tolak', [PetugasDashboardController::class, 'tolak'])->name('petugas.reservasi.tolak');
+
+        Route::get('petugas/riwayat', [PetugasDashboardController::class, 'riwayat'])->name('petugas.riwayat');
+        Route::delete('petugas/riwayat/{id}', [PetugasDashboardController::class, 'destroyRiwayat'])->name('petugas.riwayat.destroy');
     });
 
     // role: user
@@ -69,8 +72,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/reservasi/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
     
         Route::get('/reservasi', [ReservationController::class, 'riwayat'])->name('reservations.riwayat');
-        Route::delete('/reservasi/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
-
+        Route::get('reservasi/{reservation}', [ReservationController::class, 'showDetail'])->name('reservations.detail');
+        Route::patch('/reservasi/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+      
         Route::get('/laporan-kerusakan', [LaporanKerusakanController::class, 'create'])->name('laporan.create');
         Route::post('/laporan-kerusakan', [LaporanKerusakanController::class, 'store'])->name('laporan.store');
     });

@@ -12,7 +12,7 @@ class Reservation extends Model
         'nama_kegiatan', 'deskripsi_kegiatan', 'jumlah_peserta',
         'tanggal', 'start_time', 'end_time', 
         'surat_peminjaman_path', 'proposal_kegiatan_path',
-        'status', 'dibatalkan_oleh', 'alasaan_pembatalan',
+        'status', 'dibatalkan_oleh', 'alasan_pembatalan',
         'diproses_oleh', 'diproses_pada',
     ];
 
@@ -37,4 +37,26 @@ class Reservation extends Model
         ->where('end_time', '>', $start)
         ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId));
     }
+
+    public function scopeTotalDipinjamAlat($query, int $fasilitasId, string $tanggal, string $start, string $end, ?int $excludeId = null): int {
+        return (int) $this->scopeBentrok($query, $fasilitasId, $tanggal, $start, $end, $excludeId)
+            ->sum('jumlah_peserta');
+    }
+
+    public function waktuMulai(): \Illuminate\Support\Carbon
+    {
+        return \Illuminate\Support\Carbon::parse($this->tanggal->format('Y-m-d') . ' ' . $this->start_time);
+    }
+
+    public function batasPembatalanUser(): \Illuminate\Support\Carbon
+    {
+        return $this->waktuMulai()->subDays(7);
+    }
+
+    public function bisaDibatalkanOlehUser(): bool
+    {
+        return in_array($this->status, ['menunggu', 'disetujui'])
+            && now()->lt($this->batasPembatalanUser());
+    }
+
 }
