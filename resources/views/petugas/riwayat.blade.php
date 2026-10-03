@@ -38,7 +38,7 @@
         </div>
 
         <div class="p-4 border-t border-gray-700">
-            <form action="#" method="POST" class="w-full">
+            <form action="{{ route('logout') }}" method="POST" class="w-full">
                 @csrf
                 <button type="submit" class="w-full text-left px-4 py-3 text-sm text-[#E08F8F] hover:text-red-400 font-medium transition-colors">
                     Logout
