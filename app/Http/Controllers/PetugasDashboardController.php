@@ -14,23 +14,52 @@ class PetugasDashboardController extends Controller
     private array $statusRiwayat = ['disetujui', 'ditolak', 'dibatalkan'];
 
     // Fungsi untuk menampilkan halaman Dashboard Utama (hanya yang menunggu)
-    public function index()
+    public function index(Request $request)
     {
-        $reservations = Reservation::with(['user', 'fasilitas'])
-            ->where('status', 'menunggu')
-            ->latest()
-            ->get();
+        // 1. Mulai query dasar (hanya ambil yang statusnya menunggu)
+        $query = Reservation::with(['user', 'fasilitas'])
+            ->where('status', 'menunggu');
 
+        // 2. Logika Filter Tipe Fasilitas
+        if ($request->filled('tipe_fasilitas')) {
+            $query->whereHas('fasilitas', function($q) use ($request) {
+                $q->where('tipe_fasilitas', $request->tipe_fasilitas); 
+            });
+        }
+
+        // 3. Logika Filter Lokasi
+        if ($request->filled('lokasi')) {
+            $query->whereHas('fasilitas', function($q) use ($request) {
+                $q->where('lokasi', $request->lokasi); 
+            });
+        }
+
+        // 4. Logika Urutan Waktu Acara (Sorting)
+        if ($request->sort == 'terlama') {
+            $query->oldest('tanggal')->oldest('start_time');
+        } else {
+            $query->latest('tanggal')->latest('start_time');
+        }
+
+        // Eksekusi query untuk mengambil datanya
+        $reservations = $query->get();
+
+        // Hitung statistik untuk kartu dashboard atas
         $antreanReservasi = Reservation::where('status', 'menunggu')->count();
         $antreanBatal     = Reservation::where('status', 'dibatalkan')->count();
-
         $antreanKerusakan = 0;
         $sedangDiperbaiki = 0;
 
+        // 5. Ambil daftar Tipe Fasilitas & Lokasi yang unik untuk Dropdown HTML
+        $daftarTipe = \App\Models\Fasilitas::select('tipe_fasilitas')->distinct()->pluck('tipe_fasilitas');
+        $daftarLokasi = \App\Models\Fasilitas::select('lokasi')->distinct()->pluck('lokasi');
+
         return view('petugas.dashboard', compact(
-            'reservations', 'antreanReservasi', 'antreanBatal', 'antreanKerusakan', 'sedangDiperbaiki'
+            'reservations', 'antreanReservasi', 'antreanBatal', 'antreanKerusakan', 'sedangDiperbaiki', 'daftarTipe', 'daftarLokasi'
         ));
     }
+
+    
 
     // Halaman Riwayat (disetujui / ditolak / dibatalkan) + filter status
     public function riwayat(Request $request)
