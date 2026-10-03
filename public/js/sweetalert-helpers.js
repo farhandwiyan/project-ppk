@@ -52,7 +52,6 @@ function confirmPopUp(formId, title, text) {
         cancelButtonText: "Batal",
         reverseButtons: true,
     }).then((result) => {
-
         if (result.isConfirmed) {
             const form = document.getElementById(formId);
 
@@ -86,46 +85,30 @@ function confirmWithInput(
     text,
     inputLabel = "Alasan",
     inputPlaceholder = "Masukkan alasan...",
-    inputName = "alasan"
+    inputName = "alasan-cancel"
 ) {
 
     PopUp.fire({
         title: title,
-
         html: text,
-
         input: "textarea",
-
         inputLabel: inputLabel,
-
         inputPlaceholder: inputPlaceholder,
-
         inputValidator: (value) => {
-
             if (!value || value.trim().length === 0) {
                 return `${inputLabel} wajib diisi.`;
             }
 
         },
-
         icon: "warning",
-
         showCancelButton: true,
-
         confirmButtonText: "Ya",
-
         cancelButtonText: "Batal",
-
         reverseButtons: true,
-
     }).then((result) => {
-
         if (result.isConfirmed) {
-
             const form = document.getElementById(formId);
-
             const input = document.getElementById(inputName);
-
             if (!form) {
                 console.error(`Form dengan id "${formId}" tidak ditemukan.`);
                 return;
@@ -135,9 +118,8 @@ function confirmWithInput(
                 console.error(`Input dengan id "${inputName}" tidak ditemukan.`);
                 return;
             }
-
+            
             input.value = result.value;
-
             form.submit();
         }
 

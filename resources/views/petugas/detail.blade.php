@@ -6,6 +6,9 @@
     <title>Detail Reservasi - KARSA</title>
     <!-- Memanggil Tailwind CSS agar desain tetap rapi -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body class="bg-gray-50 p-8">
 
@@ -144,25 +147,36 @@
             
             @if(strtolower($reservasi->status) == 'menunggu')
             <div class="flex gap-3">
-                <form action="{{ route('petugas.reservasi.setuju', $reservasi->id) }}" method="POST">
+                <form id="form-setuju" action="{{ route('petugas.reservasi.setuju', $reservasi->id) }}" method="POST">
                     @csrf @method('PATCH')
-                    <button type="submit" class="px-8 py-2 bg-[#0F766E] text-white rounded-lg font-semibold hover:bg-teal-800 cursor-pointer">
-                        Setujui
-                    </button>
                 </form>
-                
-                <form action="{{ route('petugas.reservasi.tolak', $reservasi->id) }}" method="POST">
+
+                <button
+                    type="button"
+                    onclick="confirmPopUp('form-setuju', 'Setujui Reservasi?', 'Reservasi ini akan disetujui dan slot jadwalnya terkunci untuk fasilitas ini.')"
+                    class="px-8 py-2 bg-[#0F766E] text-white rounded-lg font-semibold hover:bg-teal-800 cursor-pointer"
+                >
+                    Setujui
+                </button>
+
+                <form id="form-tolak" action="{{ route('petugas.reservasi.tolak', $reservasi->id) }}" method="POST">
                     @csrf @method('PATCH')
-                    <button type="submit" class="px-8 py-2 bg-[#B91C1C] text-white rounded-lg font-semibold hover:bg-red-800 cursor-pointer">
+                    <input type="hidden" name="alasan" id="alasan-cancel">
+                    </form>
+                    <button
+                        type="button"
+                        onclick="confirmWithInput('form-tolak', 'Tolak Reservasi?', 'Masukkan alasan penolakan reservasi ini.', 'Alasan Penolakan', 'Contoh: Fasilitas sedang dipakai acara lain')"
+                        class="px-8 py-2 bg-[#B91C1C] text-white rounded-lg font-semibold hover:bg-red-800 cursor-pointer"
+                    >
                         Tolak
                     </button>
-                </form>
-            </div>
+                </div>
             @else
-            <div class="px-6 py-2 bg-gray-100 text-gray-600 rounded-lg font-semibold uppercase text-sm">
-                Status: {{ $reservasi->status }}
-            </div>
+                <div class="px-6 py-2 bg-gray-100 text-gray-600 rounded-lg font-semibold uppercase text-sm">
+                    Status: {{ $reservasi->status }}
+                </div>
             @endif
+
         </div>
 
     </div>

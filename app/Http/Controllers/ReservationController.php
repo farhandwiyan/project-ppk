@@ -20,7 +20,7 @@ class ReservationController extends Controller
     
         $tanggalTerpilih = $tanggalInput 
             ? Carbon::parse($tanggalInput) 
-            : now()->addDay();
+            : now()->addDays(7);
             
         return view('reservations.create', [
             'fasilitas'       => $fasilitas,

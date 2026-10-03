@@ -73,52 +73,64 @@ class PetugasDashboardController extends Controller
     // Fungsi untuk tombol Setuju (dengan cek bentrok jadwal)
     public function setuju($id)
     {
-        $reservasi = Reservation::findOrFail($id);
-
+        $reservasi = Reservation::with('fasilitas')->findOrFail($id);
+ 
         if ($reservasi->status !== 'menunggu') {
             return redirect()->route('petugas.home')
                 ->with('error', 'Hanya reservasi berstatus menunggu yang bisa disetujui.');
         }
-
-        // Cek bentrok: fasilitas & tanggal sama, jam tumpang tindih, sudah disetujui
-        $bentrok = Reservation::where('fasilitas_id', $reservasi->fasilitas_id)
+ 
+        $queryOverlap = Reservation::where('fasilitas_id', $reservasi->fasilitas_id)
             ->where('tanggal', $reservasi->tanggal)
             ->where('status', 'disetujui')
             ->where('id', '!=', $reservasi->id)
             ->where('start_time', '<', $reservasi->end_time)
-            ->where('end_time', '>', $reservasi->start_time)
-            ->exists();
-
-        if ($bentrok) {
-            return redirect()->route('petugas.reservasi.show', $reservasi->id)
-                ->with('error', 'Jadwal bentrok dengan reservasi lain yang sudah disetujui.');
+            ->where('end_time', '>', $reservasi->start_time);
+ 
+        if ($reservasi->fasilitas->isAlat()) {
+            // tipe alat: kapasitas = jumlah unit stok, jumlah_peserta = jumlah unit dipinjam
+            $terpakai = (clone $queryOverlap)->sum('jumlah_peserta');
+ 
+            if ($terpakai + $reservasi->jumlah_peserta > $reservasi->fasilitas->kapasitas) {
+                $sisa = max($reservasi->fasilitas->kapasitas - $terpakai, 0);
+                return redirect()->route('petugas.reservasi.show', $reservasi->id)
+                    ->with('error', "Stok alat tidak mencukupi untuk menyetujui reservasi ini. Sisa stok: {$sisa} unit.");
+            }
+        } else {
+            if ($queryOverlap->exists()) {
+                return redirect()->route('petugas.reservasi.show', $reservasi->id)
+                    ->with('error', 'Jadwal bentrok dengan reservasi lain yang sudah disetujui.');
+            }
         }
-
+ 
         $reservasi->update([
             'status'        => 'disetujui',
-            'diproses_oleh' => Auth::user()->id,
+            'diproses_oleh' => Auth::id(),
             'diproses_pada' => now(),
         ]);
-
+ 
         // Setelah disetujui, kembalikan petugas ke halaman dashboard utama
         return redirect()->route('petugas.home')->with('success', 'Reservasi disetujui.');
     }
-
+ 
     // Fungsi untuk tombol Tolak
-    public function tolak($id)
+    public function tolak(Request $request, $id)
     {
         $reservasi = Reservation::findOrFail($id);
-
+ 
         if ($reservasi->status !== 'menunggu') {
             return redirect()->route('petugas.home')
                 ->with('error', 'Hanya reservasi berstatus menunggu yang bisa ditolak.');
         }
-
+ 
         $reservasi->update([
-            'status'          => 'ditolak',
-            'dibatalkan_oleh' => Auth::user()->id,
+            'dibatalkan_oleh' => 'petugas',
+            'status'           => 'ditolak',
+            'diproses_oleh'    => Auth::id(),
+            'diproses_pada'    => now(),
+            'alasan_pembatalan' => $request->alasan,
         ]);
-
+ 
         // Setelah ditolak, kembalikan petugas ke halaman dashboard utama
         return redirect()->route('petugas.home')->with('success', 'Reservasi ditolak.');
     }

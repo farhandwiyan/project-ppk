@@ -28,6 +28,29 @@ body {
     font-size: 0.9rem;
 }
 
+/* ===== Button Kembali ===== */
+.btn-kembali {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+}
+
+.btn-kembali a {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border: 1px solid #1a1a4b;
+    border-radius: 25px;
+    background-color: #ffffff;
+    text-decoration: none;
+    color: #1a1a4b;
+}
+
+.btn-kembali a:hover {
+    color: #ffffff;
+    background-color: #1a1a4b;
+}
+
 /* ===== Reservasi Card ===== */
 .reservasi-card {
     background-color: #ffffff;

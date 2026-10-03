@@ -29,7 +29,7 @@
     @auth
         <!-- Link kosong untuk form Claudia yang belum jadi -->
         <a href="#">Laporan Kerusakan</a> 
-        <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
+        <a href="{{ route('reservations.riwayat') }}" class="active">Riwayat</a>
     @endauth
 
     <!-- Tombol Dinamis (Login vs Logout) -->
@@ -51,7 +51,7 @@
             <div id="profileDropdown" style="display: none; position: absolute; right: 0; top: 55px; width: 200px; background-color: white; border: 1px solid #eaeaea; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 15px; z-index: 1000; flex-direction: column; gap: 12px;">
                 
                 <!-- Tombol Edit Profil dengan border biru -->
-                <a href="{{ route('update-user') }}" style="display: flex; justify-content: center; align-items: center; width: 100%; padding: 10px; text-decoration: none; color: black; font-size: 14px; font-weight: 600; border: 2px solid #0EA5E9; border-radius: 8px; box-sizing: border-box;">
+                <a href="{{ route('update-user') }}" style="display: flex; justify-content: center; align-items: center; width: 100%; box-sizing: border-box; margin: 0; padding: 10px; text-decoration: none; color: black; font-size: 14px; font-weight: 600; border: 2px solid #0EA5E9; border-radius: 8px;">
                     Edit Profil
                 </a>
 

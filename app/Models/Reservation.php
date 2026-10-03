@@ -12,7 +12,7 @@ class Reservation extends Model
         'nama_kegiatan', 'deskripsi_kegiatan', 'jumlah_peserta',
         'tanggal', 'start_time', 'end_time', 
         'surat_peminjaman_path', 'proposal_kegiatan_path',
-        'status', 'dibatalkan_oleh', 'alasaan_pembatalan',
+        'status', 'dibatalkan_oleh', 'alasan_pembatalan',
         'diproses_oleh', 'diproses_pada',
     ];
 
