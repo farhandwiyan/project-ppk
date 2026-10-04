@@ -28,7 +28,11 @@
     <!-- Menu Khusus Pengguna Login -->
     @auth
         <!-- Link kosong untuk form Claudia yang belum jadi -->
+<<<<<<< Updated upstream
         <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a> 
+=======
+        <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a>
+>>>>>>> Stashed changes
         <a href="{{ route('reservations.riwayat') }}" class="active">Riwayat</a>
     @endauth
 
