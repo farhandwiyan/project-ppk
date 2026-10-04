@@ -66,7 +66,7 @@ class FasilitasController extends Controller
             'tipe_fasilitas' => $request->tipe_fasilitas,
             'lokasi' => $request->lokasi,
             'deskripsi' => $request->deskripsi,
-            'kapastias' => $request->kapasitas,
+            'kapasitas' => $request->kapasitas,
             'status' => 'aktif',
         ]);
 

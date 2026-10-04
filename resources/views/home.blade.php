@@ -190,9 +190,7 @@
     }
 
     window.addEventListener('click', function(e) {
-        var container = document.getElementById('
-        
-        ');
+        var container = document.getElementById('');
         var menu = document.getElementById('profileDropdown');
         if (container && menu && !container.contains(e.target)) {
             menu.style.display = 'none';

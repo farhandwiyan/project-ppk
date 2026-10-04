@@ -77,5 +77,6 @@ Route::middleware('auth')->group(function () {
       
         Route::get('/laporan-kerusakan', [LaporanKerusakanController::class, 'create'])->name('laporan.create');
         Route::post('/laporan-kerusakan', [LaporanKerusakanController::class, 'store'])->name('laporan.store');
+        Route::get('/laporan/{laporan}', [LaporanKerusakanController::class, 'show'])->name('laporan.show');
     });
 });
