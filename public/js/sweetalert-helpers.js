@@ -166,3 +166,22 @@ function fireToast(icon, title) {
         title: title
     });
 }
+
+
+/* =========================================================
+ * Message pop up
+ * ========================================================= */
+
+/**
+ *
+ * @param {string} title - title message 
+ * @param {string} text - message to display
+ * @param {string} icon - 'question' | 'success' | 'error'
+ */
+function messagePopUp(title, text, icon) {
+   Swal.fire({
+       title: title,
+       text: text,
+       icon: icon,
+   }); 
+}

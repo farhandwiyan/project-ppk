@@ -389,66 +389,6 @@
     cursor: pointer;
 }
 
-/* SUCCESS POPUP */
-.success-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.success-modal-content {
-    width: 100%;
-    max-width: 470px;
-    min-height: 360px;
-    box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    padding: 40px;
-    background: #ffffff;
-    border-radius: 20px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-
-.success-modal-content h2 {
-    margin: 0 0 45px;
-    color: #182338;
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.success-button {
-    display: inline-block;
-    padding: 15px 25px;
-
-    background: #000000;
-    color: #ffffff;
-
-    border-radius: 16px;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 600;
-
-    transition: background 0.2s;
-}
-
-.success-button:hover {
-    background: #24256d;
-}
-
 /* RESPONSIVE */
 @media (max-width: 600px) {
     .success-modal-content {
