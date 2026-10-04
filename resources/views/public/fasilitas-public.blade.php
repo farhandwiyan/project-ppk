@@ -182,7 +182,7 @@
                         @endif
 
                         <div class="card-actions">
-                            <a  class="btn-outline">Lihat Jadwal &amp; Detail</a>
+                            <a href="{{ route('fasilitas.show', ['fasilitas' => $item->id, 'tanggal' => request('tanggal')]) }}" class="btn-outline">Lihat Jadwal &amp; Detail</a>
                             <a href="{{ route('reservations.create', ['fasilitas' => $item->id, 'tanggal' => request('tanggal')]) }}" class="btn-primary">Ajukan Pinjam</a>
                         </div>
                     </div>

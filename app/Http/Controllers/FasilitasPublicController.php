@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fasilitas;
+use App\Models\Reservation; // <-- Tambahkan ini untuk memanggil data reservasi
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,29 @@ class FasilitasPublicController extends Controller
 
         return view('public.fasilitas-public', compact(
             'fasilitas', 'lokasiOptions', 'tipeOptions', 'tanggalTerpilih'
+        ));
+    }
+
+    // <-- mengambil data reservasi -->
+    public function show(Fasilitas $fasilitas, Request $request)
+    {
+        // 1. Ambil tanggal dari input (jika diubah di kalender view), default hari ini
+        $tanggalPilih = $request->input('tanggal', Carbon::today()->toDateString());
+
+        // 2. Format tanggal untuk ditampilkan lebih rapi di desain (Contoh: Senin, 01 Oktober 2026)
+        $tanggalFormat = Carbon::parse($tanggalPilih)->locale('id')->isoFormat('dddd, DD MMMM YYYY');
+
+        // 3. Tarik data peminjaman yang berstatus menunggu/disetujui pada fasilitas & tanggal tersebut
+        $reservasiHariIni = Reservation::where('fasilitas_id', $fasilitas->id)
+            ->whereDate('tanggal', $tanggalPilih)
+            ->whereIn('status', ['menunggu', 'disetujui']) 
+            ->get();
+
+        return view('public.fasilitas-detail', compact(
+            'fasilitas', 
+            'reservasiHariIni', 
+            'tanggalPilih', 
+            'tanggalFormat'
         ));
     }
 }

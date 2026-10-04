@@ -15,6 +15,8 @@ use App\Http\Controllers\LaporanKerusakanController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/fasilitas', [FasilitasPublicController::class, 'index'])->name('fasilitas-public.index');
+Route::get('/fasilitas/{fasilitas}', [FasilitasPublicController::class, 'show'])->name('fasilitas.show');
+
 
 // guest
 Route::middleware('guest')->group(function () {
@@ -65,7 +67,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // role: user
-    
+
     Route::middleware('role:user')->group(function () {
         Route::get('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'showCreateForm'])->name('reservations.create');
         Route::post('/fasilitas/{fasilitas}/reservasi', [ReservationController::class, 'create'])->name('reservations.store');
