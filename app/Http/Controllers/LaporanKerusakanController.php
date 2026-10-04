@@ -6,7 +6,6 @@ use App\Models\Fasilitas;
 use App\Models\LaporanKerusakan;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class LaporanKerusakanController extends Controller
 {
@@ -21,17 +20,9 @@ class LaporanKerusakanController extends Controller
         $validated = $request->validate([
             'lokasi' => 'required|string',
             'jenis' => 'required|string',
-<<<<<<< Updated upstream
             'fasilitas_id' => ['required', Rule::exists('fasilitas', 'id')->where(function ($query) use ($request) {
                 $query->where('lokasi', $request->lokasi)
                 ->where('tipe_fasilitas', $request->jenis);
-=======
-            'fasilitas_id' => [
-                'required', 
-                Rule::exists('fasilitas', 'id')->where(function ($query) use ($request) {
-                    $query->where('lokasi', $request->lokasi)
-                          ->where('tipe_fasilitas', $request->jenis); // <-- UBAH KATA 'jenis' MENJADI 'tipe_fasilitas' DI SINI
->>>>>>> Stashed changes
                 }),
             ],
             'nama_pelapor' => 'required|string|max:25',

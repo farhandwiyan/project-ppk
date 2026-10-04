@@ -31,11 +31,7 @@
 
         <!-- Tampil jika pengguna SUDAH login -->
         @auth
-<<<<<<< Updated upstream
             <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a> 
-=======
-            <a href="{{ route('laporan.create') }}">Laporan Kerusakan</a>
->>>>>>> Stashed changes
             <a href="{{ route('reservations.riwayat') }}">Riwayat</a>
 
             <!-- Tombol Logout -->
