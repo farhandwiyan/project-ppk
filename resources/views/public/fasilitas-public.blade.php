@@ -112,17 +112,14 @@
                 @endforeach
             </select>
 
-            <div class="date-picker">
-                <input 
-                    type="date" 
-                    name="tanggal" 
-                    id="tanggalInput" 
-                    value="{{ $tanggalTerpilih->format('Y-m-d') }}"
-                    class="border rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onchange="this.form.submit()"
-                    required
-                >
-            </div>
+            <div class="kapasitas-picker">
+    <select name="filter_kapasitas" class="filter-select" onchange="this.form.submit()">
+    <option value="">Semua Kapasitas</option>
+    <option value="kecil" {{ request('filter_kapasitas') == 'kecil' ? 'selected' : '' }}>Kecil (< 50 Orang)</option>
+    <option value="sedang" {{ request('filter_kapasitas') == 'sedang' ? 'selected' : '' }}>Sedang (50 - 200 Orang)</option>
+    <option value="besar" {{ request('filter_kapasitas') == 'besar' ? 'selected' : '' }}>Besar (> 200 Orang)</option>
+</select>
+</div>
         </form>
 
         <!-- ===== Grid Fasilitas ===== -->

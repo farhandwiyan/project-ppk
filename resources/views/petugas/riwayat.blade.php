@@ -125,7 +125,6 @@
                             <th class="p-4 font-semibold">Instansi</th>
                             <th class="p-4 font-semibold">Fasilitas</th>
                             <th class="p-4 font-semibold">Tanggal & Durasi</th>
-                            <th class="p-4 font-semibold">Tujuan</th>
                             <th class="p-4 font-semibold">Status</th>
                             <th class="p-4 font-semibold text-center">Aksi</th>
                         </tr>
@@ -148,9 +147,7 @@
                                     {{ \Carbon\Carbon::parse($res->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('H:i') }} WIB
                                 </div>
                             </td>
-                            <td class="p-4 align-top max-w-xs">
-                                <div class="text-gray-600 text-sm">{{ \Illuminate\Support\Str::limit($res->tujuan ?? '-', 60) }}</div>
-                            </td>
+
                             <td class="p-4 align-middle">
                                 @php
                                     $badgeColor = match(strtolower($res->status)) {
@@ -184,7 +181,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="p-8 text-center text-gray-500">Belum ada riwayat reservasi.</td>
+                            <td colspan="6" class="p-8 text-center text-gray-500">Belum ada riwayat reservasi.</td>
                         </tr>
                         @endforelse
                     </tbody>
