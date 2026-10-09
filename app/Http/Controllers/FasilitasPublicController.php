@@ -14,6 +14,7 @@ class FasilitasPublicController extends Controller
         $search      = $request->input('search');
         $filterLokasi = $request->input('filter_lokasi');
         $filterTipe   = $request->input('filter_tipe');
+        $filterKapasitas = $request->input('filter_kapasitas');
 
         // Default tanggal: H+7 dari hari ini, kecuali user sudah memilih tanggal lain
         $tanggalTerpilih = $request->filled('tanggal')
@@ -29,6 +30,17 @@ class FasilitasPublicController extends Controller
             })
             ->when($filterTipe, function ($query, $filterTipe) {
                 $query->where('tipe_fasilitas', $filterTipe);
+
+            })
+            // <-- Logika filter kapasitas (berdasarkan rentang jumlah orang) -->
+            ->when($filterKapasitas, function ($query, $filterKapasitas) {
+                if ($filterKapasitas == 'kecil') {
+                    $query->where('kapasitas', '<', 50);
+                } elseif ($filterKapasitas == 'sedang') {
+                    $query->where('kapasitas', '>=', 50)->where('kapasitas', '<=', 200);
+                } elseif ($filterKapasitas == 'besar') {
+                    $query->where('kapasitas', '>', 200);
+                }
             })
             ->latest()
             ->paginate(9)
@@ -38,7 +50,7 @@ class FasilitasPublicController extends Controller
         $tipeOptions   = Fasilitas::select('tipe_fasilitas')->distinct()->pluck('tipe_fasilitas');
 
         return view('public.fasilitas-public', compact(
-            'fasilitas', 'lokasiOptions', 'tipeOptions', 'tanggalTerpilih'
+            'fasilitas', 'lokasiOptions', 'tipeOptions', 
         ));
     }
 
@@ -48,7 +60,7 @@ class FasilitasPublicController extends Controller
         // 1. Ambil tanggal dari input (jika diubah di kalender view), default hari ini
         $tanggalPilih = $request->input('tanggal', Carbon::today()->toDateString());
 
-        // 2. Format tanggal untuk ditampilkan lebih rapi di desain (Contoh: Senin, 01 Oktober 2026)
+        // 2. Format tanggal untuk ditampilkan lebih rapi di desain
         $tanggalFormat = Carbon::parse($tanggalPilih)->locale('id')->isoFormat('dddd, DD MMMM YYYY');
 
         // 3. Tarik data peminjaman yang berstatus menunggu/disetujui pada fasilitas & tanggal tersebut
