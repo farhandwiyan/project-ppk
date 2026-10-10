@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Admin</title>
+    <!-- Memanggil file CSS yang sudah kita update -->
     <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
 </head>
 <body>
@@ -19,6 +20,8 @@
                 <li><a href="{{ route('admin.home') }}" class="active">Home</a></li>
                 <li><a href="{{ route('users.index') }}">Semua User</a></li>
                 <li><a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
+                
+                
             </ul>
 
             <div class="sidebar-footer">
@@ -47,23 +50,45 @@
                 <div class="alert-error">{{ session('error') }}</div>
             @endif
 
-            <!-- ===== Ringkasan / statistik (sementara) ===== -->
+            <!-- ===== Ringkasan / statistik ===== -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <span class="stat-label">User Terverifikasi</span>
                     <span class="stat-value">{{ $verifiedUsers ?? '-' }}</span>
                     <span class="stat-hint">Status akun sudah diverifikasi</span>
                 </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Total Fasilitas</span>
+                    <span class="stat-value">{{ $totalFasilitas ?? 0 }}</span>
+                    <span class="stat-hint">Fasilitas terdaftar di sistem</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Reservasi Bulan Ini</span>
+                    <span class="stat-value">{{ $reservasiBulanIni ?? 0 }}</span>
+                    <span class="stat-hint">Total reservasi bulan berjalan</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Laporan Kerusakan</span>
+                    <span class="stat-value">{{ $laporanBulanIni ?? 0 }}</span>
+                    <span class="stat-hint">Laporan masuk bulan ini</span>
+                </div>
             </div>
 
-            <div class="card">
+            <!-- ===== Pusat Laporan ===== -->
+            <div class="card report-card">
                 <div class="card-header">
-                    <h2>Ringkasan</h2>
+                    <h2>Pusat Laporan & Rekapitulasi</h2>
                 </div>
-                <p class="empty-note">
-                    Statistik lain (aktivitas, reservasi, laporan, dsb.) akan ditambahkan di sini menyusul.
-                    Untuk melihat dan mengelola seluruh user, buka menu <strong>Semua User</strong> di sidebar.
-                </p>
+                <div class="card-body report-card-body">
+                    <p class="report-description">
+                        Pilih jenis laporan yang ingin Anda lihat. Anda dapat melakukan filter berdasarkan periode dan lokasi, serta mengekspor data ke format PDF atau Excel di halaman masing-masing laporan.
+                    </p>
+                    <a href="{{ route('admin.laporan.okupansi') }}" class="btn-report">Lihat Rekap Okupansi</a>
+                    <a href="{{ route('admin.laporan.kerusakan') }}" class="btn-report">Lihat Rekap Kerusakan</a>
+                </div>
             </div>
         </main>
     </div>
