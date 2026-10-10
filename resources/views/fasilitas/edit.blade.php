@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="form-group">
-                        {{-- BARU: label kapasitas dinamis sesuai tipe (orang vs unit) --}}
+                        {{-- label kapasitas dinamis sesuai tipe (orang vs unit) --}}
                         <label for="kapasitas">
                             Kapasitas ({{ strtolower($fasilitas->tipe_fasilitas) === 'alat' ? 'unit' : 'orang' }})
                         </label>
@@ -126,7 +126,7 @@
                     </div>
                 </form>
 
-                {{-- ========== BARU: Section Status Fasilitas ========== --}}
+                {{-- ========== Section Status Fasilitas ========== --}}
                 <hr class="section-divider">
 
                 <div class="status-zone">

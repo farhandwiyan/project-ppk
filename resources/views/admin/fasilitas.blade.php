@@ -6,6 +6,9 @@
     <title>Fasilitas - Admin</title>
     <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/fasilitas.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body>
     <div class="layout">
@@ -107,6 +110,18 @@
                                     <td>{{ $item->kapasitas }} orang</td>
                                     <td class="fasilitas-actions">
                                         <a href="{{ route('fasilitas.edit', $item->id) }}" class="btn-icon">Edit</a>
+
+                                        <form id="delete-fasilitas-form-{{ $item->id }}" action="{{ route('fasilitas.delete', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                type="button"
+                                                class="btn-icon-danger"
+                                                onclick="confirmPopUp('delete-fasilitas-form-{{ $item->id }}', 'Hapus Fasilitas?', 'Data fasilitas \'{{ $item->nama }}\' akan dihapus permanen dan tidak dapat dikembalikan!')"
+                                            >
+                                                Hapus
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty

@@ -75,6 +75,16 @@
   
 
     <!-- KONTEN UTAMA -->
+        @php
+            $gambar = match (true) {
+                str_contains(strtolower($fasilitas->tipe_fasilitas), 'ruangan')  => asset('img/ruang-kelas.png'),
+                str_contains(strtolower($fasilitas->tipe_fasilitas), 'aula')     => asset('img/aula.png'),
+                str_contains(strtolower($fasilitas->tipe_fasilitas), 'lapangan') => asset('img/lapangan.png'),
+                str_contains(strtolower($fasilitas->tipe_fasilitas), 'laboratorium') => asset('img/laboratorium.png'),
+                str_contains(strtolower($fasilitas->tipe_fasilitas), 'alat')     => asset('img/alat.png'),
+                default => asset('img/ruang-kelas.png'),
+            };
+        @endphp
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 font-sans text-gray-800 mt-24">        
             
         <!-- 2. Header & Tombol Aksi -->
@@ -103,8 +113,8 @@
         <!-- 3. Galeri Foto (Disesuaikan dengan format database & form reservasi) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div class="md:col-span-2 bg-gray-200 rounded-xl h-64 md:h-96 overflow-hidden flex items-center justify-center text-gray-400 relative shadow-sm">
-                @if(!empty($fasilitas->gambar))
-                    <img src="{{ asset('storage/' . $fasilitas->gambar) }}" alt="{{ $fasilitas->nama }}" class="w-full h-full object-cover">
+                @if(!empty($gambar))
+                    <img src="{{ $gambar }}" alt="{{ $fasilitas->nama }}" class="w-full h-full object-cover">
                 @else
                     <div class="text-center p-6">
                         <i data-feather="image" class="w-12 h-12 mx-auto mb-2 text-gray-400"></i>
@@ -115,15 +125,15 @@
             
             <div class="flex flex-col gap-4 h-64 md:h-96">
                 <div class="bg-gray-200 rounded-xl h-1/2 overflow-hidden flex items-center justify-center text-gray-400 text-sm shadow-sm relative">
-                    @if(!empty($fasilitas->gambar))
-                        <img src="{{ asset('storage/' . $fasilitas->gambar) }}" alt="{{ $fasilitas->nama }}" class="w-full h-full object-cover">
+                    @if(!empty($gambar))
+                        <img src="{{ $gambar }}" alt="{{ $fasilitas->nama }}" class="w-full h-full object-cover">
                     @else
                         <span class="flex items-center gap-1"><i data-feather="image" class="w-4 h-4"></i> Foto Pendukung 1</span>
                     @endif
                 </div>
                 <div class="bg-gray-200 rounded-xl h-1/2 overflow-hidden relative flex items-center justify-center text-gray-400 text-sm shadow-sm">
-                    @if(!empty($fasilitas->gambar))
-                        <img src="{{ asset('storage/' . $fasilitas->gambar) }}" alt="{{ $fasilitas->nama }}" class="w-full h-full object-cover">
+                    @if(!empty($gambar))
+                        <img src="{{ $gambar }}" alt="{{ $fasilitas->nama }}" class="w-full h-full object-cover">
                     @else
                         <span class="flex items-center gap-1"><i data-feather="image" class="w-4 h-4"></i> Foto Pendukung 2</span>
                     @endif

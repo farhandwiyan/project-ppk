@@ -16,11 +16,6 @@ class FasilitasPublicController extends Controller
         $filterTipe   = $request->input('filter_tipe');
         $filterKapasitas = $request->input('filter_kapasitas');
 
-        // Default tanggal: H+7 dari hari ini, kecuali user sudah memilih tanggal lain
-        $tanggalTerpilih = $request->filled('tanggal')
-            ? Carbon::parse($request->input('tanggal'))
-            : Carbon::today()->addDays(7);
-
         $fasilitas = Fasilitas::query()
             ->when($search, function ($query, $search) {
                 $query->where('nama', 'like', '%' . $search . '%');
@@ -58,7 +53,7 @@ class FasilitasPublicController extends Controller
     public function show(Fasilitas $fasilitas, Request $request)
     {
         // 1. Ambil tanggal dari input (jika diubah di kalender view), default hari ini
-        $tanggalPilih = $request->input('tanggal', Carbon::today()->toDateString());
+        $tanggalPilih = $request->input('tanggal', Carbon::today()->addDays(7)->toDateString());
 
         // 2. Format tanggal untuk ditampilkan lebih rapi di desain
         $tanggalFormat = Carbon::parse($tanggalPilih)->locale('id')->isoFormat('dddd, DD MMMM YYYY');
