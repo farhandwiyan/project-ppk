@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
-
-// use App\Models\LaporanKerusakan; // Nanti buka komentar ini jika modelnya sudah ada
+use App\Models\LaporanKerusakan; 
 
 class PetugasDashboardController extends Controller
 {
@@ -47,7 +46,7 @@ class PetugasDashboardController extends Controller
         // Hitung statistik untuk kartu dashboard atas
         $antreanReservasi = Reservation::where('status', 'menunggu')->count();
         $antreanBatal     = Reservation::where('status', 'dibatalkan')->count();
-        $antreanKerusakan = 0;
+        $antreanKerusakan = LaporanKerusakan::where('status', 'baru')->count();
         $sedangDiperbaiki = 0;
 
         // 5. Ambil daftar Tipe Fasilitas & Lokasi yang unik untuk Dropdown HTML

@@ -25,7 +25,7 @@
                 <a href="{{ route('petugas.riwayat') }}" class="flex items-center px-4 py-3 bg-sidebar-active rounded-lg text-sm text-gray-100 font-medium">
                     Riwayat Reservasi
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
+                <a href="{{ route('petugas.laporan.index') }}" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
                     Laporan Kerusakan
                 </a>
                 <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">

@@ -63,6 +63,19 @@
                     <strong>Deskripsi:</strong>
                     {{ $laporan->deskripsi }}
                 </p>
+                @if ($laporan->status === 'selesai' && $laporan->catatan_penyelesaian)
+                    <p>
+                        <strong>Catatan Penyelesaian:</strong>
+                        {{ $laporan->catatan_penyelesaian }}
+                    </p>
+                @endif
+
+                @if ($laporan->status === 'ditolak' && $laporan->alasan_penolakan)
+                    <p>
+                        <strong>Alasan Penolakan:</strong>
+                        {{ $laporan->alasan_penolakan }}
+                    </p>
+                @endif
 
                 <div class="bukti-section">
                     <strong>Bukti Kerusakan:</strong>
