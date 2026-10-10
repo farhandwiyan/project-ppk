@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Karsa</title>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body>
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                messagePopUp("Berhasil!", "{{ session('success') }}", "success");
+            });
+        </script>
+    @endif
+
     <!-- Navbar -->
      <nav class="navbar">
         <div class="navbar-container">
@@ -188,7 +199,7 @@
                 Respons Cepat Sarpras Terpadu
             </div>
             
-            <h2 style="font-size: 28px; font-weight: 700; margin: 0 0 20px 0; line-height: 1.3; letter-spacing: 0.025em;">Menemukan Fasilitas Rusak dan Bermasalah ?</h2>
+            <h2 style="font-size: 28px; font-weight: 700; margin: 0 0 20px 0; line-height: 1.3; letter-spacing: 0.025em;">Menemukan Fasilitas Rusak dan Bermasalah?</h2>
             
             <!-- Keunggulan (List) -->
             <div style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 13px; color: #D1D5DB; box-sizing: border-box;">

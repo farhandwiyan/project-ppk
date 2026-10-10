@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Peminjaman - KARSA</title>
     <link rel="stylesheet" href="{{ asset('css/reservations/riwayat.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body>
+
+        @if (session('success'))
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    messagePopUp("Berhasil!", "{{ session('success') }}", "success");
+                });
+            </script>
+        @endif
 
     <!-- ===== Navbar ===== -->
     <nav class="navbar">
