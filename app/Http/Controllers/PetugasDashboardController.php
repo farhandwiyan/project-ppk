@@ -160,6 +160,6 @@ class PetugasDashboardController extends Controller
         ]);
  
         // Setelah ditolak, kembalikan petugas ke halaman dashboard utama
-        return redirect()->route('petugas.home')->with('success', 'Reservasi ditolak.');
+        return back()->with('success', 'Reservasi berhasil ditolak.');
     }
 }
