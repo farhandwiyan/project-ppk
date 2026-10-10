@@ -43,4 +43,10 @@ class Fasilitas extends Model
     public function creator() {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function laporanKerusakan()
+    {
+        return $this->hasMany(LaporanKerusakan::class, 'fasilitas_id');
+    }
+
 }

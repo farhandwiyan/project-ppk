@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fasilitas;
+use App\Models\LaporanKerusakan;
+use App\Models\Reservation;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,9 +16,22 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard', [
-            'verifiedUsers' => User::where('status', 'verified')->count(),
-        ]);
+        // Menghitung user terverifikasi
+        $verifiedUsers = User::where('status', 'verified')->count();
+
+        // Menghitung statistik untuk dashboard lainnya
+        $totalFasilitas = Fasilitas::count();
+        
+        $reservasiBulanIni = Reservation::whereMonth('tanggal', Carbon::now()->month)
+                                        ->whereYear('tanggal', Carbon::now()->year)
+                                        ->count();
+                                        
+        $laporanBulanIni = LaporanKerusakan::whereMonth('created_at', Carbon::now()->month)
+                                        ->whereYear('created_at', Carbon::now()->year)
+                                        ->count();
+
+        // Gabungkan semua variabel menggunakan compact
+        return view('admin.dashboard', compact('verifiedUsers', 'totalFasilitas', 'reservasiBulanIni', 'laporanBulanIni'));
     }
 
     public function getAllUser(Request $request) {

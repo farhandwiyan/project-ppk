@@ -1,0 +1,74 @@
+
+
+/* Filter Area */
+.filter-container { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-bottom: 24px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+.filter-form { 
+    display: flex; 
+    gap: 15px; 
+    align-items: flex-end; 
+    flex-wrap: wrap; 
+}
+.form-group { 
+    display: flex; 
+    flex-direction: column; 
+}
+.form-group label { 
+    font-size: 12px; 
+    color: #555; 
+    margin-bottom: 5px; 
+    font-weight: bold; 
+}
+.form-group input, 
+.form-group select { 
+    padding: 8px 12px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+/* Tabel Area */
+.table-container { 
+    background: #fff; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+th, td { 
+    padding: 12px 15px; 
+    text-align: left; 
+    border-bottom: 1px solid #eee; 
+}
+th { 
+    background-color: #17183B; 
+    color: white; 
+    font-size: 14px; 
+}
+
+/* Header & Tombol */
+.header-actions { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+/* Badge (Label Warna) untuk Persentase */
+.badge { 
+    padding: 4px 8px; 
+    border-radius: 20px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    display: inline-block;
+}
+.badge-green { background: #dcfce7; color: #166534; }
+.badge-yellow { background: #fef08a; color: #854d0e; }
+.badge-red { background: #fee2e2; color: #991b1b; }

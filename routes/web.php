@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetugasDashboardController;
 use App\Http\Controllers\LaporanKerusakanController;
 use App\Http\Controllers\PetugasLaporanController;
-
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\ReportController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,6 +54,14 @@ Route::middleware('auth')->group(function () {
         Route::put('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'update'])->name('fasilitas.update');
         Route::delete('admin/fasilitas/{fasilitas}', [FasilitasController::class, 'delete'])->name('fasilitas.delete');
         Route::patch('admin/fasilitas/{fasilitas}/status', [FasilitasController::class, 'updateStatus'])->name('fasilitas.update-status');
+
+        Route::get('admin/laporan/okupansi', [ReportController::class, 'okupansi'])->name('admin.laporan.okupansi');
+    Route::get('admin/laporan/okupansi/export', [ReportController::class, 'exportOkupansi'])->name('admin.laporan.okupansi.export');
+    
+    // 2. Rekap Kerusakan & Export
+    Route::get('admin/laporan/kerusakan', [ReportController::class, 'kerusakan'])->name('admin.laporan.kerusakan');
+    Route::get('admin/laporan/kerusakan/export', [ReportController::class, 'exportKerusakan'])->name('admin.laporan.kerusakan.export');
+
     });
 
     // role: petugas
