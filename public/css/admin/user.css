@@ -71,13 +71,23 @@
 }
 
 .btn-icon-danger {
+    background-color: #f7f7fb;
     color: #c0392b;
+    border: 1px solid #c0392b;
+}
+
+.btn-icon-danger:hover {
     background-color: #fdecea;
 }
 
 .btn-icon-verify {
-    color: #d4f5f2;
-    background-color: #29A195;
+    background-color: #f7f7fb; 
+    color: #065f46;          
+    border: 1px solid #065f46;
+}
+
+.btn-icon-verify:hover {
+    background-color: rgba(167, 243, 208, 0.371);
 }
 
 /* Badge status verifikasi */
