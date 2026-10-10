@@ -13,7 +13,7 @@ class AutoCancelReservations extends Command
 
     public function handle(): void
     {
-        $batasWaktu = Carbon::now()->subHours(72); 
+        $batasWaktu = Carbon::now()->subHours(72);
 
         $reservasiExpired = Reservation::where('status', 'menunggu')
             ->where('created_at', '<=', $batasWaktu)

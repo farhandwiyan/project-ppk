@@ -37,7 +37,7 @@ class AuthController extends Controller
             'status' => 'unverified',
         ]);
 
-        return redirect()->route('home')->with('success', 'Registrasi berhasil! Silahkan tunggu konfirmasi akun dari admin.');
+        return redirect()->route('home')->with('login_success', 'Registrasi berhasil! Silahkan tunggu konfirmasi akun dari admin.');
     }
 
     public function showLoginForm() {
@@ -65,7 +65,7 @@ class AuthController extends Controller
                 }
             }
 
-            return redirect()->intended(route('home'))->with('success', 'Login berhasil!');
+            return redirect()->intended(route('home'))->with('login_success', 'Login berhasil!');
         }
 
         // jika gagal login

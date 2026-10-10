@@ -146,12 +146,14 @@ class ReservationController extends Controller
 
         $reservasi->update([
             'status' => 'dibatalkan',
+            'dibatalkan_oleh' => 'petugas',
             'alasan_pembatalan' => $validated['alasan_pembatalan'],
+            'diproses_oleh' => Auth::user()->id,
+            'diproses_pada' => now(),
         ]);
 
         return redirect()
             ->route('petugas.laporan.show', $laporan->id)
             ->with('success', 'Reservasi berhasil dibatalkan.');
     }
-
 }

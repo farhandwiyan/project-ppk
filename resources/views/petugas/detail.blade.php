@@ -192,23 +192,24 @@
                         Tolak
                     </button>
                 </div>
+
+            @elseif (strtolower($reservasi->status) === 'disetujui')
+                <form id="form-batalkan" action="{{ route('petugas.reservasi.fasilitas.batalkan', $reservasi->id) }}" method="POST">
+                    @csrf @method('PATCH')
+                    <input type="hidden" name="alasan" id="alasan-cancel">
+                </form>
+
+                <button
+                    type="button"
+                    onclick="confirmWithInput('form-batalkan', 'Batalkan Reservasi?', 'Masukkan alasan pembatalan reservasi yang sudah disetujui ini.', 'Alasan Pembatalan', 'Contoh: Terjadi perubahan jadwal mendadak / pemeliharaan ruangan')"
+                    class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 cursor-pointer text-sm"
+                >
+                    Batalkan Reservasi
+                </button>
             @else
                 <div class="px-6 py-2 bg-gray-100 text-gray-600 rounded-lg font-semibold uppercase text-sm">
                     Status: {{ $reservasi->status }}
                 </div>
-            @endif
-
-            @if (strtolower($reservasi->status) === 'disetujui')
-                <button
-                    type="button"
-                    onclick="document.getElementById(
-                        'modal-batal-reservasi'
-                    ).classList.remove('hidden')"
-                    class="px-4 py-2 bg-red-600 text-white rounded-lg
-                           text-sm font-semibold hover:bg-red-700"
-                >
-                    Batalkan Reservasi
-                </button>
             @endif
 
         </div>
