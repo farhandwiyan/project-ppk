@@ -42,7 +42,7 @@ class LaporanKerusakanController extends Controller
         }
 
         $validated['user_id'] = auth()->id();
-        $validated['status'] = 'diproses';
+        $validated['status'] = 'baru';
         $validated['bukti_kerusakan'] = $paths;
 
         LaporanKerusakan::create($validated);

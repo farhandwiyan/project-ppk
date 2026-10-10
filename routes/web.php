@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetugasDashboardController;
 use App\Http\Controllers\LaporanKerusakanController;
+use App\Http\Controllers\PetugasLaporanController;
 
 
 
@@ -64,6 +65,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('petugas/riwayat', [PetugasDashboardController::class, 'riwayat'])->name('petugas.riwayat');
         Route::delete('petugas/riwayat/{id}', [PetugasDashboardController::class, 'destroyRiwayat'])->name('petugas.riwayat.destroy');
+
+        Route::get('petugas/laporan', [PetugasLaporanController::class, 'index'])->name('petugas.laporan.index');
+        Route::get('petugas/laporan/{id}', [PetugasLaporanController::class, 'show'])->name('petugas.laporan.show');
+        Route::patch('petugas/laporan/{id}/status', [PetugasLaporanController::class, 'updateStatus'])->name('petugas.laporan.status');
     });
 
     // role: user
