@@ -8,8 +8,19 @@
     <!-- Load Tailwind CSS & Feather Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body class="bg-gray-50">
+
+        @if (session('success'))
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    messagePopUp("Berhasil!", "{{ session('success') }}", "success");
+                });
+            </script>
+        @endif
 
     <!-- Navbar (Disamakan dengan fasilitas-public) -->
    <nav class="navbar">
