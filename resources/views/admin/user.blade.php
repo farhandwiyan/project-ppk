@@ -124,7 +124,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="email" value="{{ $user->email }}">
-                                                <button type="button" class="btn-icon btn-icon-danger" onclick="confirmPopUp('delete-form-{{ $user->id }}', 'Hapus User?', 'Data user ini akan dihapus permanen!')">Delete</button>
+                                                <button type="button" class="btn-icon btn-icon-danger" onclick="confirmPopUp('delete-form-{{ $user->id }}', 'Hapus User?', 'Data user ini akan dihapus permanen!')">Hapus</button>
                                             </form>
                                         @endif
                                     </td>
