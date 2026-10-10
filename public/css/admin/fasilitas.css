@@ -54,19 +54,30 @@
 }
 
 .btn-icon {
-    background: none;
-    background-color: #29A195;
-    color: #ffffff;
-    border: none;
+    background-color: #f7f7fb; 
+    color: #065f46;          
+    border: 1px solid #065f46;
     text-decoration: none;
     font-size: 0.85rem;
     cursor: pointer;
-    padding: 0.3rem 0.6rem;
+    padding: 0.3rem 0.8rem;
     border-radius: 6px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle; 
+    line-height: normal;
+}
+
+.btn-icon:hover {
+    background-color: rgba(167, 243, 208, 0.371);
 }
 
 .btn-icon-danger {
+    background-color: #f7f7fb;
     color: #c0392b;
+    border: 1px solid #c0392b;
 }
 
 .btn-icon-danger:hover {

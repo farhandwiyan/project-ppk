@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        {{-- BARU: tampilkan pesan error (mis. dari PembatalanTidakDiizinkanException kalau lolos dari UI tapi ditolak server) --}}
+        {{-- tampilkan pesan error (mis. dari PembatalanTidakDiizinkanException kalau lolos dari UI tapi ditolak server) --}}
         @if (session('error'))
             <div class="alert-error">{{ session('error') }}</div>
         @endif
