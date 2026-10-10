@@ -11,6 +11,8 @@ use App\Services\ReservationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -119,6 +121,37 @@ class ReservationController extends Controller
         );
 
         return redirect()->route('reservations.riwayat')->with('success', 'Reservasi berhasil dibatalkan');
+    }
+
+    public function cancelByPetugas(Request $request, $id): RedirectResponse
+    {
+        $validated = $request->validate([
+            'laporan_id' => ['required', 'exists:laporan_kerusakan,id'],
+            'alasan_pembatalan' => ['required', 'string', 'max:1000'],
+            ]);
+
+        $laporan = LaporanKerusakan::findOrFail($validated['laporan_id']);
+        $reservasi = Reservation::findOrFail($id);
+
+        if ($reservasi->fasilitas_id != $laporan->fasilitas_id) {
+            return redirect()
+                ->route('petugas.laporan.show', $laporan->id)
+                ->with('error', 'Reservasi tidak terkait dengan fasilitas pada laporan ini.');
+        }
+
+        if (! in_array($reservasi->status, ['menunggu', 'disetujui'], true)) {
+            return redirect()
+                ->route('petugas.laporan.show', $laporan->id);
+        }
+
+        $reservasi->update([
+            'status' => 'dibatalkan',
+            'alasan_pembatalan' => $validated['alasan_pembatalan'],
+        ]);
+
+        return redirect()
+            ->route('petugas.laporan.show', $laporan->id)
+            ->with('success', 'Reservasi berhasil dibatalkan.');
     }
 
 }

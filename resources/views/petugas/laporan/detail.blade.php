@@ -140,6 +140,183 @@
             </div>
         </div>
 
+        <!-- 2. Reservasi Terkait -->
+        <div class="border border-gray-200 rounded-lg p-6 mb-6">
+            <div class="flex flex-col sm:flex-row sm:justify-between
+                    sm:items-center gap-2 mb-4">
+            <div>
+                <h2 class="text-sm font-bold text-gray-800 uppercase tracking-wide">
+                    Reservasi Terkait
+                </h2>
+                <p class="text-xs text-gray-500 mt-1">
+                    Reservasi yang menggunakan fasilitas ini.
+                </p>
+            </div>
+
+            <span class="bg-blue-50 text-blue-700 px-3 py-1
+                        rounded-full text-xs font-semibold">
+                    {{ $reservasiTerkait->count() }} Reservasi
+            </span>
+        </div>
+
+@forelse ($reservasiTerkait as $reservasi)
+    @php
+        $statusColor = match ($reservasi->status) {
+            'menunggu' => 'bg-orange-100 text-orange-700',
+            'disetujui' => 'bg-green-100 text-green-700',
+            'dibatalkan', 'ditolak' => 'bg-red-100 text-red-700',
+            default => 'bg-gray-100 text-gray-700',
+        };
+    @endphp
+
+    <div class="border border-gray-200 rounded-lg p-4 mb-3 last:mb-0">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+
+            {{-- Informasi Reservasi --}}
+            <div class="flex-1">
+                <h3 class="font-semibold text-gray-800">
+                    {{ $reservasi->nama_kegiatan ?? 'Reservasi #' . $reservasi->id }}
+                </h3>
+
+                <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">
+                            Tanggal Reservasi
+                        </p>
+                        <p class="text-sm font-medium text-gray-800">
+                            {{ \Carbon\Carbon::parse($reservasi->tanggal)->translatedFormat('d F Y') }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">
+                            Waktu Reservasi
+                        </p>
+                        <p class="text-sm font-medium text-gray-800">
+                            {{ substr($reservasi->start_time, 0, 5) }}
+                            -
+                            {{ substr($reservasi->end_time, 0, 5) }}
+                            WIB
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <span class="{{ $statusColor }} px-3 py-1 rounded-full text-xs font-semibold">
+                        {{ ucfirst($reservasi->status) }}
+                    </span>
+                </div>
+            </div>
+
+            {{-- Tombol Aksi --}}
+            <div class="flex w-full flex-col gap-2 lg:w-56">
+
+                {{-- Detail Reservasi --}}
+                <a
+                    href="{{ route('petugas.reservasi.show', [
+                        'id' => $reservasi->id,
+                        'laporan_id' => $laporan->id,
+                    ]) }}"
+                    class="flex w-full items-center justify-center rounded-lg border border-gray-300 px-4 py-3 text-center text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                    Lihat Detail
+                </a>
+
+                @if ($reservasi->status === 'menunggu')
+
+                    {{-- Form Penolakan --}}
+                    <form
+                        id="form-tolak-reservasi-{{ $reservasi->id }}"
+                        action="{{ route('petugas.reservasi.tolak', $reservasi->id) }}"
+                        method="POST"
+                        class="hidden"
+                    >
+                        @csrf
+                        @method('PATCH')
+
+                        <input
+                            type="hidden"
+                            name="alasan"
+                            id="alasan-tolak-reservasi-{{ $reservasi->id }}"
+                        >
+                    </form>
+
+                    {{-- Tombol Tolak --}}
+                    <button
+                        type="button"
+                        onclick="confirmWithInput(
+                            'form-tolak-reservasi-{{ $reservasi->id }}',
+                            'Tolak Reservasi?',
+                            'Masukkan alasan penolakan reservasi ini.',
+                            'Alasan Penolakan',
+                            'Contoh: Fasilitas sedang digunakan acara lain',
+                            'alasan-tolak-reservasi-{{ $reservasi->id }}'
+                        )"
+                        class="flex w-full items-center justify-center rounded-lg bg-red-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-red-700"
+                    >
+                        Tolak
+                    </button>
+
+                @elseif ($reservasi->status === 'disetujui')
+
+                    {{-- Form Pembatalan --}}
+                    <form
+                        id="form-batal-reservasi-{{ $reservasi->id }}"
+                        action="{{ route('petugas.reservasi.batalkan', $reservasi->id) }}"
+                        method="POST"
+                        class="hidden"
+                    >
+                        @csrf
+                        @method('PATCH')
+
+                        <input
+                            type="hidden"
+                            name="laporan_id"
+                            value="{{ $laporan->id }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="alasan_pembatalan"
+                            id="alasan-batal-reservasi-{{ $reservasi->id }}"
+                        >
+                    </form>
+
+                    {{-- Tombol Batalkan --}}
+                    <button
+                        type="button"
+                        onclick="confirmWithInput(
+                            'form-batal-reservasi-{{ $reservasi->id }}',
+                            'Batalkan Reservasi?',
+                            'Masukkan alasan pembatalan yang akan dilihat oleh pengguna.',
+                            'Alasan Pembatalan',
+                            'Contoh: Fasilitas sedang mengalami kerusakan',
+                            'alasan-batal-reservasi-{{ $reservasi->id }}'
+                        )"
+                        class="flex w-full items-center justify-center rounded-lg bg-red-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-red-700"
+                    >
+                        Batalkan
+                    </button>
+
+                @endif
+
+            </div>
+        </div>
+    </div>
+
+@empty
+    <div class="text-center py-8 bg-gray-50 rounded-lg">
+        <p class="text-sm text-gray-600 font-medium">
+            Tidak ada reservasi aktif untuk fasilitas ini.
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+            Reservasi yang sudah dibatalkan atau ditolak tidak ditampilkan.
+        </p>
+    </div>
+@endforelse
+</div>
+
+
         <!-- 4. Hasil Pemrosesan -->
         @if ($laporan->status !== 'baru')
         <div class="border border-gray-200 rounded-lg p-6 mb-8">

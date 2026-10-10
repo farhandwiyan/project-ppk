@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanKerusakan;
+use App\Models\Reservation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,17 @@ class PetugasLaporanController extends Controller
     {
         $laporan = LaporanKerusakan::with(['user', 'fasilitas', 'petugas'])->findOrFail($id);
 
-        return view('petugas.laporan.detail', compact('laporan'));
+        $reservasiTerkait = Reservation::where(
+            'fasilitas_id',
+            $laporan->fasilitas_id
+        )
+        ->whereDate('tanggal', '>=', now()->toDateString())
+        ->whereIn('status', ['menunggu', 'disetujui'])
+        ->orderBy('tanggal')
+        ->orderBy('start_time')
+        ->get();
+
+        return view('petugas.laporan.detail', compact('laporan', 'reservasiTerkait'));
     }
 
     // Ubah status laporan (diproses / selesai / ditolak)

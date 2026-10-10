@@ -141,7 +141,28 @@
 
         <!-- Tombol Aksi Bawah -->
         <div class="flex justify-between items-center pt-4 border-t">
-            <a href="{{ route('petugas.home') }}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50">
+            <a href="{{ request('laporan_id')
+                ? route('petugas.laporan.show', request('laporan_id'))
+                : route('petugas.home') }}"
+        class="inline-flex items-center gap-2 px-4 py-2
+            border border-gray-300 rounded-lg
+            text-sm font-semibold text-gray-700
+            hover:bg-gray-50 transition-colors"
+>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+        >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 19l-7-7 7-7"
+        />
+        </svg>
                 Kembali
             </a>
             
@@ -175,6 +196,19 @@
                 <div class="px-6 py-2 bg-gray-100 text-gray-600 rounded-lg font-semibold uppercase text-sm">
                     Status: {{ $reservasi->status }}
                 </div>
+            @endif
+
+            @if (strtolower($reservasi->status) === 'disetujui')
+                <button
+                    type="button"
+                    onclick="document.getElementById(
+                        'modal-batal-reservasi'
+                    ).classList.remove('hidden')"
+                    class="px-4 py-2 bg-red-600 text-white rounded-lg
+                           text-sm font-semibold hover:bg-red-700"
+                >
+                    Batalkan Reservasi
+                </button>
             @endif
 
         </div>
