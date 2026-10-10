@@ -54,7 +54,6 @@ function confirmPopUp(formId, title, text) {
     }).then((result) => {
         if (result.isConfirmed) {
             const form = document.getElementById(formId);
-
             if (form) {
                 form.submit();
             }

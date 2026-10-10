@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fasilitas;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
@@ -57,8 +58,6 @@ class PetugasDashboardController extends Controller
             'reservations', 'antreanReservasi', 'antreanBatal', 'antreanKerusakan', 'sedangDiperbaiki', 'daftarTipe', 'daftarLokasi'
         ));
     }
-
-    
 
     // Halaman Riwayat (disetujui / ditolak / dibatalkan) + filter status
     public function riwayat(Request $request)
@@ -162,4 +161,70 @@ class PetugasDashboardController extends Controller
         // Setelah ditolak, kembalikan petugas ke halaman dashboard utama
         return back()->with('success', 'Reservasi berhasil ditolak.');
     }
+
+    public function getAllFasilitas(Request $request) {
+        $search = $request->input('search');
+        $filterTipe = $request->input('filter_tipe');
+        $filterLokasi = $request->input('filter_lokasi');
+
+        $fasilitas = Fasilitas::select('id', 'nama', 'tipe_fasilitas', 'lokasi', 'kapasitas', 'status')
+        ->when($search, function ($query, $search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
+        ->when($filterTipe, function ($query, $filterTipe) {
+            $query->where('tipe_fasilitas', $filterTipe);
+        })
+        ->when($filterLokasi, function ($query, $filterLokasi) {
+            $query->where('lokasi', $filterLokasi);
+        })->latest()->paginate(20)->withQueryString();
+
+        $tipeOptions = Fasilitas::select('tipe_fasilitas')->distinct()->pluck('tipe_fasilitas');
+        $lokasiOptions = Fasilitas::select('lokasi')->distinct()->pluck('lokasi');
+
+        $totalAktif = Fasilitas::whereRaw('LOWER(status) = ?', ['aktif'])->count();
+        $totalNonaktif = Fasilitas::whereRaw('LOWER(status) = ?', ['nonaktif'])->count();
+        $totalPerbaikan = Fasilitas::whereRaw('LOWER(status) IN (?, ?)', ['perbaikan', 'sedang diperbaiki'])->count();
+
+        return view('petugas.fasilitas', compact(
+            'fasilitas', 'search', 'filterTipe', 'filterLokasi', 'tipeOptions', 'lokasiOptions', 'totalPerbaikan', 'totalNonaktif', 'totalAktif'
+        ));
+    }
+
+    public function editStatusFasilitas($id)
+    {
+        $fasilitas = Fasilitas::findOrFail($id);
+
+        // Mengambil reservasi yang statusnya masih aktif (menunggu atau disetujui)
+        $reservasi = Reservation::where('fasilitas_id', $fasilitas->id)
+            ->whereIn('status', ['menunggu', 'disetujui']) 
+            ->latest()
+            ->get();
+
+        return view('petugas.ubah-status-fasilitas', compact(
+            'fasilitas',
+            'reservasi'
+        ));
+    }
+
+    public function batalkan(Request $request, $id)
+    {
+        $reservasi = Reservation::findOrFail($id);
+ 
+        if ($reservasi->status == 'dibatalkan' && $reservasi->status == 'ditolak' ) {
+            return redirect()->back()
+                ->with('error', 'Hanya reservasi berstatus menunggu atau diterima yang bisa dibatalkan.');
+        }
+ 
+        $reservasi->update([
+            'dibatalkan_oleh' => 'petugas',
+            'status'           => 'dibatalkan',
+            'diproses_oleh'    => Auth::id(),
+            'diproses_pada'    => now(),
+            'alasan_pembatalan' => $request->alasan,
+        ]);
+ 
+        // Setelah ditolak, kembalikan petugas 
+        return back()->with('success', 'Reservasi berhasil dibatalkan.');
+    }
+
 }

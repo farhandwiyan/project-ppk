@@ -60,6 +60,11 @@ class PetugasLaporanController extends Controller
     public function updateStatus(Request $request, $id): RedirectResponse
     {
         $laporan = LaporanKerusakan::findOrFail($id);
+        $user = $request->user();
+
+        $allowedStatuses = ($user && $user->role === 'admin')
+        ? ['aktif', 'dalam_perbaikan', 'nonaktif']
+        : ['aktif', 'dalam_perbaikan'];
 
         $validated = $request->validate([
             'status' => ['required', Rule::in([
@@ -67,11 +72,13 @@ class PetugasLaporanController extends Controller
                 LaporanKerusakan::STATUS_SELESAI,
                 LaporanKerusakan::STATUS_DITOLAK,
             ])],
+            'status_fasilitas' => ['required', Rule::in($allowedStatuses)],
             'alasan_penolakan' => ['nullable', 'required_if:status,'.LaporanKerusakan::STATUS_DITOLAK, 'string', 'max:1000'],
             'catatan_penyelesaian' => ['nullable', 'required_if:status,'.LaporanKerusakan::STATUS_SELESAI, 'string', 'max:1000'],
         ], [
             'status.required' => 'Status laporan wajib dipilih.',
             'status.in' => 'Status laporan tidak valid.',
+            'status_fasilitas.required' => 'Status fasilitas wajib dipilih.',
             'alasan_penolakan.required_if' => 'Alasan penolakan wajib diisi.',
             'catatan_penyelesaian.required_if' => 'Catatan penyelesaian wajib diisi.',
             'alasan_penolakan.max' => 'Alasan penolakan maksimal 1000 karakter.',
@@ -97,6 +104,12 @@ class PetugasLaporanController extends Controller
             $perubahan['alasan_penolakan'] = $validated['alasan_penolakan'];
         }
 
+        if ($laporan->fasilitas) {
+            $laporan->fasilitas->update([
+                'status' => $validated['status_fasilitas']
+            ]);
+        }
+        
         $laporan->update($perubahan);
 
         return redirect()->route('petugas.laporan.show', $laporan->id)

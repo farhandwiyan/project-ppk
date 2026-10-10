@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Reservasi - KARSA</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
+    
     <style>
         .bg-sidebar { background-color: #0A0F2C; }
         .bg-sidebar-active { background-color: #1A2254; }
+
+        body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+            height: 100vh !important;
+            overflow: hidden !important;
+            padding-right: 0 !important;
+        }
     </style>
+
 </head>
 <body class="bg-gray-50 flex h-screen font-sans overflow-hidden">
 
@@ -28,11 +39,8 @@
                 <a href="{{ route('petugas.laporan.index') }}" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
                     Laporan Kerusakan
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
+                <a href="{{ route('petugas.fasilitas.index') }}" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
                     Status Fasilitas
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
-                    Jadwal Perbaikan
                 </a>
             </nav>
         </div>
@@ -167,12 +175,14 @@
                                        class="px-4 py-2 text-xs border border-gray-300 text-gray-700 rounded hover:bg-gray-100 font-medium">
                                         Lihat Detail
                                     </a>
-                                    <form action="{{ route('petugas.riwayat.destroy', $res->id) }}" method="POST"
-                                          onsubmit="return confirm('Hapus riwayat reservasi ini? Data tidak dapat dikembalikan.')">
+                                    <form id="form-hapus-riwayat-{{ $res->id }}" action="{{ route('petugas.riwayat.destroy', $res->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                                class="px-4 py-2 text-xs border border-red-300 text-red-600 rounded hover:bg-red-50 font-medium">
+                                        <button
+                                            type="button"
+                                            onclick="confirmPopUp('form-hapus-riwayat-{{ $res->id }}', 'Hapus Riwayat?', 'Data riwayat reservasi ini tidak dapat dikembalikan.')"
+                                            class="px-4 py-2 text-xs border border-red-300 text-red-600 rounded hover:bg-red-50 font-medium cursor-pointer"
+                                        >
                                             Hapus
                                         </button>
                                     </form>

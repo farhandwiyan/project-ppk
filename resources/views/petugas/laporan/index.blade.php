@@ -28,11 +28,8 @@
                 <a href="{{ route('petugas.laporan.index') }}" class="flex items-center px-4 py-3 bg-sidebar-active rounded-lg text-sm text-gray-100 font-medium">
                     Laporan Kerusakan
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
+                <a href="{{ route('petugas.fasilitas.index') }}" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
                     Status Fasilitas
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-sidebar-active rounded-lg transition-colors">
-                    Jadwal Perbaikan
                 </a>
             </nav>
         </div>

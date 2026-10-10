@@ -13,15 +13,6 @@
     <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body class="bg-gray-50">
-
-        @if (session('success'))
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    messagePopUp("Berhasil!", "{{ session('success') }}", "success");
-                });
-            </script>
-        @endif
-
     <!-- Navbar (Disamakan dengan fasilitas-public) -->
    <nav class="navbar">
         <div class="navbar-container">

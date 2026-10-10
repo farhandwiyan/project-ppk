@@ -111,13 +111,26 @@ class FasilitasController extends Controller
 
     public function updateStatus(Request $request, Fasilitas $fasilitas)
     {
+        $user = $request->user();
+
+        // Tentukan status yang diizinkan berdasarkan role user
+        $allowedStatuses = ($user && $user->role === 'admin')
+            ? ['aktif', 'dalam_perbaikan', 'nonaktif']
+            : ['aktif', 'dalam_perbaikan'];
+
+        // Lakukan validasi
         $validated = $request->validate([
-            'status' => ['required', 'in:aktif,dalam_perbaikan,nonaktif'],
+            'status' => ['required', 'in:' . implode(',', $allowedStatuses)],
+        ], [
+            'status.in' => 'Petugas tidak diizinkan mengubah status menjadi nonaktif atau status tidak valid.',
         ]);
- 
-        $fasilitas->update(['status' => $validated['status']]);
- 
-        return back()->with('success', "Status fasilitas '{$fasilitas->nama}' diubah menjadi {$validated['status']}.");
+
+        // Update status jika validasi lolos
+        $fasilitas->update([
+            'status' => $validated['status']
+        ]);
+
+        return back()->with('success', "Status fasilitas '{$fasilitas->nama}' berhasil diubah menjadi {$validated['status']}.");
     }
 
     public function delete(Fasilitas $fasilitas)

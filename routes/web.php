@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('petugas/reservasi/{id}/setuju', [PetugasDashboardController::class, 'setuju'])->name('petugas.reservasi.setuju');
         Route::patch('petugas/reservasi/{id}/tolak', [PetugasDashboardController::class, 'tolak'])->name('petugas.reservasi.tolak');
         Route::patch('petugas/reservasi/{id}/batalkan', [ReservationController::class, 'cancelByPetugas'])->name('petugas.reservasi.batalkan');
+        Route::patch('petugas/fasilitas/reservasi/{id}/batalkan', [PetugasDashboardController::class, 'batalkan'])->name('petugas.reservasi.fasilitas.batalkan');
 
         Route::get('petugas/riwayat', [PetugasDashboardController::class, 'riwayat'])->name('petugas.riwayat');
         Route::delete('petugas/riwayat/{id}', [PetugasDashboardController::class, 'destroyRiwayat'])->name('petugas.riwayat.destroy');
@@ -70,6 +71,11 @@ Route::middleware('auth')->group(function () {
         Route::get('petugas/laporan', [PetugasLaporanController::class, 'index'])->name('petugas.laporan.index');
         Route::get('petugas/laporan/{id}', [PetugasLaporanController::class, 'show'])->name('petugas.laporan.show');
         Route::patch('petugas/laporan/{id}/status', [PetugasLaporanController::class, 'updateStatus'])->name('petugas.laporan.status');
+
+        Route::get('/petugas/fasilitas', [PetugasDashboardController::class, 'getAllFasilitas'])->name('petugas.fasilitas.index');
+        Route::get('/petugas/fasilitas/{id}/ubah-status', [PetugasDashboardController::class, 'editStatusFasilitas'])->name('petugas.fasilitas.editStatus');
+        Route::patch('petugas/fasilitas/{fasilitas}/status', [FasilitasController::class, 'updateStatus'])->name('petugas.fasilitas.updateStatus');
+
     });
 
     // role: user
