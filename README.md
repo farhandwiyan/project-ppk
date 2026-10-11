@@ -32,18 +32,20 @@ Sistem melayani empat aktor dengan hak akses berbeda: **Pengunjung** (tanpa logi
 | FR-005 | Facility Search and Catalog | Menampilkan ketersediaan & status fasilitas berdasarkan waktu tertentu tanpa login |
 | FR-006 | Facility Reservation Request | User mengajukan reservasi (tanggal, waktu penggunaan, tujuan penggunaan) |
 | FR-007 | Facility Reservation Request | Validasi waktu reservasi pada jam operasional (07.00–20.00) |
-| FR-008 | History and Status Tracking | User melihat riwayat & status reservasi (menunggu, diterima, ditolak, dibatalkan) |
-| FR-009 | Reservation Cancellation | User membatalkan reservasi sebelum batas waktu tertentu |
-| FR-010 | Reservation Approval Management | Petugas menyetujui/menolak reservasi serta memproses laporan kerusakan |
-| FR-011 | Reservation Approval Management | Petugas melihat dashboard daftar pengajuan reservasi |
-| FR-012 | Reservation Approval Management | Sistem mencegah persetujuan reservasi yang bentrok jadwal pada fasilitas yang sama |
-| FR-013 | Submitting a Damage Report | User membuat laporan kerusakan (kategori, deskripsi, bukti foto) |
-| FR-014 | Report Status Tracking | Sistem menampilkan perkembangan status laporan kerusakan |
-| FR-015 | Report Processing and Validation | Petugas memproses/memvalidasi laporan, mengubah status (baru, diproses, selesai, ditolak), memberi catatan penyelesaian |
-| FR-016 | Report Processing and Validation | Petugas mengubah status fasilitas: aktif, dalam perbaikan, atau tidak tersedia |
-| FR-017 | Report Processing and Validation | Petugas menolak reservasi terdekat pada fasilitas yang sedang dalam perbaikan |
-| FR-018 | Reporting & Export | Admin melihat rekap penggunaan fasilitas dan jumlah kerusakan |
-| FR-019 | Reporting & Export | Admin mengekspor laporan sistem dalam format CSV, Excel, atau PDF |
+| FR-008 | Reservation Cancellation | Sistem membatasi pengajuan reservasi maksimal 7 hari sebelum acara dimulai |
+| FR-009 | History and Status Tracking | User melihat riwayat & status reservasi (menunggu, diterima, ditolak, dibatalkan) |
+| FR-010 | Reservation Cancellation | User membatalkan reservasi sebelum batas waktu tertentu (7 hari sebelum acara dimulai) |
+| FR-011 | Reservation Approval Management | Petugas menyetujui/menolak reservasi serta memproses laporan kerusakan |
+| FR-012 | Reservation Cancellation | Sistem akan menolak reservasi secara otomatis apabila tidak diproses dalam waktu 3x24 jam |
+| FR-013 | Reservation Approval Management | Petugas melihat dashboard daftar pengajuan reservasi |
+| FR-014 | Reservation Approval Management | Sistem mencegah persetujuan reservasi yang bentrok jadwal pada fasilitas yang sama |
+| FR-015 | Submitting a Damage Report | User membuat laporan kerusakan (kategori, deskripsi, bukti foto) |
+| FR-016 | Report Status Tracking | Sistem menampilkan perkembangan status laporan kerusakan |
+| FR-017 | Report Processing and Validation | Petugas memproses/memvalidasi laporan, mengubah status (baru, diproses, selesai, ditolak), memberi catatan penyelesaian |
+| FR-018 | Report Processing and Validation | Petugas mengubah status fasilitas: aktif, dalam perbaikan, atau tidak tersedia |
+| FR-019 | Report Processing and Validation | Petugas menolak reservasi terdekat pada fasilitas yang sedang dalam perbaikan |
+| FR-020 | Reporting & Export | Admin melihat rekap penggunaan fasilitas dan jumlah kerusakan |
+| FR-021 | Reporting & Export | Admin mengekspor laporan sistem dalam format CSV, Excel, atau PDF |
 
 ## Aktor & Role
 
@@ -134,9 +136,12 @@ Variabel utama pada `.env`:
 
 ## Akun Default
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@example.ocom` | sangat rahasia |
+| Role | Email | Password | Status |
+|---|---|---|---| 
+| Admin | `admin@example.com` | sangat rahasia | verified |
+| Admin | `petugas@example.com` | rahasia | verified |
+| User | `farhan@example.ocom` | farhan123 | unverified |
+| User | `joko@example.ocom` | joko123 | verified |
 
 ## Aturan Bisnis Utama
 
@@ -148,12 +153,12 @@ Variabel utama pada `.env`:
 
 ## Anggota Tim & Pembagian Tugas
 
-| Nama | NIM | Tugas |
-|---|---|---|
-| Farhan Muhtaram | 24060124140185 | _(diisi)_ |
-| Farhan Dwiyan Akbar | 24060124140137 | _(diisi)_ |
-| Claudia Meitania Putri | 24060124140188 | _(diisi)_ |
-| Adelia Clearesta | 24060124140204 | _(diisi)_ |
+| Nama | NIM |
+|---|---|
+| Farhan Muhtaram | 24060124140185 |
+| Farhan Dwiyan Akbar | 24060124140137 | 
+| Claudia Meitania Putri | 24060124140188 | 
+| Adelia Clearesta | 24060124140204 |
 
 ## Lisensi
 
