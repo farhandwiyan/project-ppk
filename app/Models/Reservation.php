@@ -50,7 +50,7 @@ class Reservation extends Model
 
     public function batasPembatalanUser(): \Illuminate\Support\Carbon
     {
-        return $this->waktuMulai()->subDays(7);
+        return $this->waktuMulai()->subDays(7)->endOfDay();
     }
 
     public function bisaDibatalkanOlehUser(): bool
