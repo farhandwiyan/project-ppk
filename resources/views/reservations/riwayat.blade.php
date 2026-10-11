@@ -10,6 +10,14 @@
     <script src="{{ asset('js/sweetalert-helpers.js') }}"></script>
 </head>
 <body>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                messagePopUp("Berhasil!", "{{ session('success') }}", "success");
+            });
+        </script>
+    @endif
     <!-- ===== Navbar ===== -->
     <nav class="navbar">
         <div class="navbar-container">
@@ -396,7 +404,7 @@
     </main>
 
     <!-- ===== Footer ===== -->
-    <footer class="site-footer">
+     <footer class="site-footer">
         <div class="footer-grid">
             <div class="footer-col footer-brand">
                 <h4>KARSA</h4>
@@ -407,22 +415,18 @@
             <div class="footer-col">
                 <h5>LAYANAN UTAMA</h5>
                 <ul>
-                    <li><a href="#">Eksplorasi Fasilitas</a></li>
-                    <li><a href="#">Jadwal Publik Kampus</a></li>
-                    <li><a href="#">Pengajuan Reservasi</a></li>
-                    <li><a href="#">Pelaporan Kerusakan</a></li>
-                    <li><a href="#">Tracking Tiket Perbaikan</a></li>
+                    <li><a href="{{ route('fasilitas-public.index') }}">Eksplorasi Fasilitas</a></li>
+                    <li><a href="{{ route('fasilitas-public.index') }}">Pengajuan Reservasi</a></li>
+                    <li><a href="{{ route('laporan.create') }}">Pelaporan Kerusakan</a></li>
+                    <li><a href="{{ route('reservations.riwayat') }}">Tracking Perbaikan</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h5>REGULASI KAMPUS</h5>
+                <h5>SOSIAL MEDIA</h5>
                 <ul>
-                    <li><a href="#">SK Rektor No. 42/2026</a></li>
-                    <li><a href="#">SOP Jam Malam &amp; Keamanan</a></li>
-                    <li><a href="#">Pedoman Penggunaan Laboratorium</a></li>
-                    <li><a href="#">Tarif Kebersihan Organisasi Luar</a></li>
-                    <li><a href="#">Pencegahan Konflik Jadwal</a></li>
+                    <li><a href="https://www.instagram.com/undip.official?srtk=bmxrenJ1N3hxcWJj" target="_blank">Instagram</a></li>
+                    <li><a href="https://www.linkedin.com/school/diponegoro-university-indonesia/" target="_blank">LinkedIn</a></li>
                 </ul>
             </div>
 

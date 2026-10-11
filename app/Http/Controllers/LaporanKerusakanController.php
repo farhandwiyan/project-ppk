@@ -48,7 +48,7 @@ class LaporanKerusakanController extends Controller
         LaporanKerusakan::create($validated);
 
         return redirect()
-        ->route('laporan.create')
+        ->route('reservations.riwayat')
         ->with('success', 'Laporan kerusakan berhasil dikirim.');
     }
 

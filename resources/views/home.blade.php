@@ -178,55 +178,98 @@
 
         </div>
 
-     <!-- ===== BANNER LAPORAN KERUSAKAN ===== -->
-<div style="width: 100%; margin-top: 48px; font-family: 'Inter', sans-serif; box-sizing: border-box;">
-    <!-- Background diubah ke #17183B dan width dibuat 100% -->
-    <div style="background-color: #17183B; border-radius: 8px; padding: 48px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.15); box-sizing: border-box; flex-wrap: wrap; gap: 32px; width: 100%;">
-        
-        <!-- Bagian Kiri (Teks & Info) -->
-        <div style="flex: 1; min-width: 280px; color: #ffffff; box-sizing: border-box;">
-            <!-- Badge Kuning -->
-            <div style="display: inline-flex; align-items: center; gap: 8px; background-color: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; padding: 6px 16px; font-size: 12px; font-weight: 500; color: #FBBF24; margin-bottom: 20px; box-sizing: border-box;">
-                <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                Respons Cepat Sarpras Terpadu
-            </div>
-            
-            <h2 style="font-size: 28px; font-weight: 700; margin: 0 0 20px 0; line-height: 1.3; letter-spacing: 0.025em;">Menemukan Fasilitas Rusak dan Bermasalah?</h2>
-            
-            <!-- Keunggulan (List) -->
-            <div style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 13px; color: #D1D5DB; box-sizing: border-box;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                    <svg style="width: 16px; height: 16px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    Wajib Unggah Bukti Foto
-                </span>
-                <span style="display: flex; align-items: center; gap: 8px;">
-                    <svg style="width: 16px; height: 16px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Pantau Tiket Real-Time
-                </span>
+            <!-- ===== BANNER LAPORAN KERUSAKAN ===== -->
+        <div style="width: 100%; margin-top: 48px; font-family: 'Inter', sans-serif; box-sizing: border-box;">
+            <!-- Background diubah ke #17183B dan width dibuat 100% -->
+            <div style="background-color: #17183B; border-radius: 8px; padding: 48px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.15); box-sizing: border-box; flex-wrap: wrap; gap: 32px; width: 100%;">
+                
+                <!-- Bagian Kiri (Teks & Info) -->
+                <div style="flex: 1; min-width: 280px; color: #ffffff; box-sizing: border-box;">
+                    <!-- Badge Kuning -->
+                    <div style="display: inline-flex; align-items: center; gap: 8px; background-color: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; padding: 6px 16px; font-size: 12px; font-weight: 500; color: #FBBF24; margin-bottom: 20px; box-sizing: border-box;">
+                        <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        Respons Cepat Sarpras Terpadu
+                    </div>
+                    
+                    <h2 style="font-size: 28px; font-weight: 700; margin: 0 0 20px 0; line-height: 1.3; letter-spacing: 0.025em;">Menemukan Fasilitas Rusak dan Bermasalah?</h2>
+                    
+                    <!-- Keunggulan (List) -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 13px; color: #D1D5DB; box-sizing: border-box;">
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            <svg style="width: 16px; height: 16px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Wajib Unggah Bukti Foto
+                        </span>
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            <svg style="width: 16px; height: 16px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Pantau Tiket Real-Time
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Bagian Kanan (Tombol Aksi) -->
+                <div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 320px; box-sizing: border-box; flex-shrink: 0;">
+                    
+                    <!-- Tombol Buat Laporan (Langsung arahkan ke tujuan asli) -->
+                    <a href="{{ route('laporan.create') }}" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; background-color: #ffffff; color: #0F172A; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background-color 0.2s; box-sizing: border-box;">
+                        <svg style="width: 18px; height: 18px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        Buat Laporan Kerusakan Sekarang
+                    </a>
+                    
+                    <!-- Tombol Lacak Status (Langsung arahkan ke tujuan asli) -->
+                    <a href="{{ route('reservations.riwayat') }}" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; background-color: #ffffff; color: #0F172A; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background-color 0.2s; box-sizing: border-box;">
+                        <svg style="width: 18px; height: 18px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        Lacak Status Laporan
+                    </a>
+                    
+                </div>
+
             </div>
         </div>
-
-        <!-- Bagian Kanan (Tombol Aksi) -->
-        <div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 320px; box-sizing: border-box; flex-shrink: 0;">
-            
-            <!-- Tombol Buat Laporan (Langsung arahkan ke tujuan asli) -->
-            <a href="{{ route('laporan.create') }}" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; background-color: #ffffff; color: #0F172A; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background-color 0.2s; box-sizing: border-box;">
-                <svg style="width: 18px; height: 18px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                Buat Laporan Kerusakan Sekarang
-            </a>
-            
-            <!-- Tombol Lacak Status (Langsung arahkan ke tujuan asli) -->
-            <a href="{{ route('reservations.riwayat') }}" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; background-color: #ffffff; color: #0F172A; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background-color 0.2s; box-sizing: border-box;">
-                <svg style="width: 18px; height: 18px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                Lacak Status Laporan
-            </a>
-            
-        </div>
-
-    </div>
-</div>
        </section>
 
+       <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <h4>KARSA</h4>
+                    <p>Platform Manajemen Fasilitas &amp; Reservasi Kampus Terpadu. Mewujudkan tata kelola sarana perguruan tinggi yang transparan, akuntabel, dan berbasis digital demi menunjang Tri Dharma Perguruan Tinggi.</p>
+                    <p class="footer-note">Project PPK 2026 &bull; Direktorat Sarana &amp; Prasarana Kampus</p>
+                </div>
+
+                <div class="footer-col">
+                    <h5>LAYANAN UTAMA</h5>
+                    <ul>
+                        <li><a href="{{ route('fasilitas-public.index') }}">Eksplorasi Fasilitas</a></li>
+                        <li><a href="{{ route('fasilitas-public.index') }}">Pengajuan Reservasi</a></li>
+                        <li><a href="{{ route('laporan.create') }}">Pelaporan Kerusakan</a></li>
+                        <li><a href="{{ route('reservations.riwayat') }}">Tracking Perbaikan</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>SOSIAL MEDIA</h5>
+                    <ul>
+                        <li><a href="https://www.instagram.com/undip.official?srtk=bmxrenJ1N3hxcWJj" target="_blank">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/school/diponegoro-university-indonesia/" target="_blank">LinkedIn</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>BIRO FASILITAS &amp; ASET</h5>
+                    <p>Gedung Rektorat Sayap Timur Lt. 1<br>Jl. Kampus Terpadu No. 1, Graha Wiyata</p>
+                    <p>Hotline: (021) 789-2026<br>Email: sarpras@kampus.ac.id</p>
+                    <p>Senin - Jumat (07.30 - 16.30 WIB)</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 KARSA Campus Operations. Seluruh Hak Cipta Dilindungi Undang-Undang.</span>
+                <div class="footer-links">
+                    <a href="#">Kebijakan Privasi Data</a>
+                    <a href="#">Syarat &amp; Ketentuan</a>
+                    <a href="#">Bantuan Teknis</a>
+                </div>
+            </div>
+        </footer>
      
      <!-- Feather Icon -->
     <script src="https://unpkg.com/feather-icons"></script>

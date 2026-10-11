@@ -73,7 +73,6 @@
                 @if (in_array($reservation->status, ['menunggu', 'disetujui']) && $reservation->user_id === auth()->id())
                     <div class="form-group" style="margin-top: 1rem;">
                         @if ($reservation->bisaDibatalkanOlehUser())
-                            {{-- Aktif: form tersembunyi, disubmit lewat JS setelah alasan diisi di popup --}}
                             <form
                                 id="cancel-form"
                                 action="{{ route('reservations.cancel', $reservation) }}"

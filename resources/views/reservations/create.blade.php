@@ -134,22 +134,23 @@
             <!-- ===== Form Reservasi ===== -->
             <section class="reservasi-card">
 
-                <div class="reservasi-header">
-                    <h2>Form Reservasi</h2>
-                    <p><span class="required">*</span> Pengajuan reservasi Anda akan ditinjau dan dikonfirmasi terlebih dahulu oleh petugas</p>
-                </div>
-
-                <!-- SlotBentrokException ditampilkan di sini -->
-                @error('fasilitas_id')
-                    <div class="alert-error" style="margin: 0 2.2rem 1.5rem;">{{ $message }}</div>
-                @enderror
-
                 {{-- form hanya ditampilkan kalau fasilitas memang bisa direservasi --}}
                 @if ($fasilitasBisaDireservasi)
+
+                    <div class="reservasi-header">
+                        <h2>Form Reservasi</h2>
+                        <p><span class="required">*</span> Pengajuan reservasi Anda akan ditinjau dan dikonfirmasi terlebih dahulu oleh petugas</p>
+                    </div>
+
+                    <!-- SlotBentrokException ditampilkan di sini -->
+                    @error('fasilitas_id')
+                        <div class="alert-error" style="margin: 0 2.2rem 1.5rem;">{{ $message }}</div>
+                    @enderror
+
                     <form action="{{ route('reservations.store', $fasilitas) }}" method="POST" enctype="multipart/form-data" class="reservasi-form">
                         @csrf
 
-                        {{-- Wajib ada: ReservationService membaca $data['fasilitas_id'] untuk cek bentrok jadwal --}}
+                        {{-- ReservationService membaca $data['fasilitas_id'] untuk cek bentrok jadwal --}}
                         <input type="hidden" name="fasilitas_id" value="{{ $fasilitas->id }}">
 
                         <div class="form-group">
@@ -290,7 +291,6 @@
                                 <input type="file" id="surat_peminjaman" name="surat_peminjaman" accept="application/pdf" hidden required>
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 13L10.5 15.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
                                 <p>Tarik dokumen ke sini atau <span class="dropzone-link">Jelajahi Berkas</span></p>
-                                {{-- PERBAIKAN: hint disamakan dengan rule validasi (max:2048 = 2MB), sebelumnya salah tulis 5MB --}}
                                 <span class="dropzone-hint">Mendukung format pdf (Maksimal 2 MB)</span>
                                 <span class="dropzone-filename"></span>
                             </div>
@@ -318,9 +318,15 @@
                         </button>
 
                         <p class="form-footnote">
-                            <span class="required">*</span>Catatan: Pembatalan reservasi hanya dapat dilakukan maksimal 3 hari (H-3) sebelum tanggal kegiatan.
+                            <span class="required">*</span>Catatan: Pembatalan reservasi hanya dapat dilakukan maksimal 7 hari (H-7) sebelum tanggal kegiatan.
                         </p>
                     </form>
+                @else
+                    @php $perbaikan = ($fasilitas->status ?? '') === 'dalam_perbaikan'; @endphp
+                    <div class="reservasi-header">
+                            <h2>Reservasi Tidak Tersedia</h2>
+                            <p><span class="required">*</span> {{ $fasilitas->nama }} sedang {{ $perbaikan ? 'dalam perbaikan' : 'tidak aktif' }} dan belum dapat menerima reservasi saat ini. <a href="{{ route('fasilitas-public.index') }}" style="color: #c0392b; text-decoration: none;">Lihat fasilitas lain</a></p>
+                    </div>
                 @endif
             </section>
 
@@ -338,22 +344,18 @@
                 <div class="footer-col">
                     <h5>LAYANAN UTAMA</h5>
                     <ul>
-                        <li><a href="#">Eksplorasi Fasilitas</a></li>
-                        <li><a href="#">Jadwal Publik Kampus</a></li>
-                        <li><a href="#">Pengajuan Reservasi</a></li>
-                        <li><a href="#">Pelaporan Kerusakan</a></li>
-                        <li><a href="#">Tracking Tiket Perbaikan</a></li>
+                        <li><a href="{{ route('fasilitas-public.index') }}">Eksplorasi Fasilitas</a></li>
+                        <li><a href="{{ route('fasilitas-public.index') }}">Pengajuan Reservasi</a></li>
+                        <li><a href="{{ route('laporan.create') }}">Pelaporan Kerusakan</a></li>
+                        <li><a href="{{ route('reservations.riwayat') }}">Tracking Perbaikan</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
-                    <h5>REGULASI KAMPUS</h5>
+                    <h5>SOSIAL MEDIA</h5>
                     <ul>
-                        <li><a href="#">SK Rektor No. 42/2026</a></li>
-                        <li><a href="#">SOP Jam Malam &amp; Keamanan</a></li>
-                        <li><a href="#">Pedoman Penggunaan Laboratorium</a></li>
-                        <li><a href="#">Tarif Kebersihan Organisasi Luar</a></li>
-                        <li><a href="#">Pencegahan Konflik Jadwal</a></li>
+                        <li><a href="https://www.instagram.com/undip.official?srtk=bmxrenJ1N3hxcWJj" target="_blank">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/school/diponegoro-university-indonesia/" target="_blank">LinkedIn</a></li>
                     </ul>
                 </div>
 

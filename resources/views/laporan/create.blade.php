@@ -359,11 +359,7 @@
                     Eksplorasi Fasilitas
                 </a>
 
-                <a href="#">
-                    Jadwal Publik Kampus
-                </a>
-
-                <a href="#">
+                <a href="{{ route('fasilitas-public.index') }}">
                     Pengajuan Reservasi
                 </a>
 
@@ -371,7 +367,7 @@
                     Pelaporan Kerusakan
                 </a>
 
-                <a href="#">
+                <a href="{{ route('reservations.riwayat') }}">
                     Tracking Titik Perbaikan
                 </a>
             </div>
@@ -380,11 +376,8 @@
             <div class="footer-column">
                 <h4>REGULASI KAMPUS</h4>
 
-                <a href="#">SK Rektor No. 42/2026</a>
-                <a href="#">SOP Jam Malam & Keamanan</a>
-                <a href="#">Pedoman Penggunaan Laboratorium</a>
-                <a href="#">Tarif Kebersihan Organisasi Luar</a>
-                <a href="#">Pencegahan Konflik Jadwal</a>
+                <a href="https://www.instagram.com/undip.official?srtk=bmxrenJ1N3hxcWJj" target="_blank">Instagram</a>
+                <a href="https://www.linkedin.com/school/diponegoro-university-indonesia/" target="_blank">LinkedIn</a>
             </div>
 
 

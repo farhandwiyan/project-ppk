@@ -144,8 +144,9 @@ body {
 .fasilitas-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 5rem;
+    align-items: stretch;
+    gap: 4rem;
+    flex-wrap: wrap;
 }
 
 .fasilitas-card {
@@ -155,6 +156,9 @@ body {
     background-color: #ffffff;
     padding: 1.5rem 1.5rem 2.5rem 1.5rem;
     border-radius: 10px;
+    box-sizing: border-box;
+    flex: 1 1 1;
+    max-width: 280px;
 }
 
 .fasilitas-card img {
@@ -206,6 +210,7 @@ body {
     justify-content: center;
     align-items: stretch;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .prosedur-card {
@@ -214,12 +219,14 @@ body {
     gap: 0.5rem;
     background-color: #1a1a4b;
     color: #ffffff;
-    padding: 2rem 2rem 4rem 2rem;
+    padding: 2rem 2rem 4rem;
     border-radius: 6px;
-
-    flex: 1 1 0;      
-    width: 320px;     
     box-sizing: border-box;
+
+    /* Ukuran kartu menyesuaikan ruang yang tersedia */
+    flex: 1 1 250px;
+    min-width: 0;
+    max-width: 360px;
 }
 
 .prosedur-card .number {
@@ -248,4 +255,239 @@ body {
 .prosedur-content p {
     font-weight: 300;
     min-height: 3rem;
+}
+
+.site-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #eee;
+    padding: 3rem 3rem 1.5rem;
+    margin-top: 4rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-col h4 {
+    color: #1a1a4b;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.footer-col h5 {
+    color: #1a1a4b;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+}
+
+.footer-col p {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+}
+
+.footer-note {
+    font-size: 0.78rem;
+    color: #999;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-col ul li a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.footer-col ul li a:hover {
+    color: #1a1a4b;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 2.5rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #1a1a4b;
+}
+
+/* Tablet dan laptop dengan lebar terbatas */
+@media (max-width: 1100px) {
+    .navbar {
+        padding: 0.5rem 1%;
+        gap: 0.35rem;
+    }
+
+    .navbar-container {
+        gap: 0.5rem;
+    }
+
+    .navbar img {
+        width: 40px;
+        height: 40px;
+        padding: 0.35rem;
+    }
+
+    .navbar-title h3 {
+        font-size: 0.95rem;
+    }
+
+    .navbar-title p {
+        max-width: 190px;
+        font-size: 0.62rem;
+    }
+
+    .navbar-nav {
+        gap: 0;
+    }
+
+    .navbar-nav a {
+        padding: 0.45rem 0.4rem;
+        font-size: 0.76rem;
+    }
+
+    #button-login {
+        padding: 0.4rem 0.7rem;
+    }
+
+    .fasilitas-card img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 7 / 5;
+        object-fit: cover;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+    .fasilitas,
+    .prosedur {
+        padding: 2rem 1rem;
+    }
+
+    .fasilitas-container,
+    .prosedur-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .fasilitas-card,
+    .prosedur-card {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .fasilitas h2 {
+        font-size: 2rem;
+    }
+
+    .prosedur-title h2 {
+        font-size: 2.5rem;
+    }
+
+    .prosedur-title h3 {
+        font-size: 1.2rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+
+/* Layar kecil: tetap horizontal, tetapi lebih ringkas */
+@media (max-width: 760px) {
+    .navbar {
+        padding: 0.5rem 0.6rem;
+        gap: 0.2rem;
+    }
+
+    .navbar-container {
+        gap: 0.35rem;
+    }
+
+    .navbar img {
+        width: 32px;
+        height: 32px;
+        padding: 0.25rem;
+    }
+
+    .navbar-title h3 {
+        font-size: 0.8rem;
+    }
+
+    .navbar-title p {
+        max-width: 125px;
+        font-size: 0.52rem;
+        overflow-wrap: anywhere;
+    }
+
+    .navbar-nav a {
+        padding: 0.35rem 0.25rem;
+        font-size: 0.65rem;
+    }
+
+    #button-login {
+        padding: 0.35rem 0.5rem;
+    }
+
+    .fasilitas,
+    .prosedur {
+        padding: 1.5rem 0.8rem;
+    }
+
+    .fasilitas-card,
+    .prosedur-card {
+        padding: 1.25rem;
+    }
+
+    .fasilitas-card img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .prosedur-content p {
+        min-height: 0;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
 }

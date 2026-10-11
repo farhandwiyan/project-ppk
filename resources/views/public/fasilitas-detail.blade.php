@@ -93,7 +93,6 @@
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
             <div>
                 <div class="flex items-center gap-2 mb-2">
-                    <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">TERSEDIA HARI INI</span>
                     <span class="text-gray-500 text-sm">Kategori: {{ $fasilitas->tipe_fasilitas }}</span>
                 </div>
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ $fasilitas->nama }}</h1>
@@ -143,6 +142,7 @@
             </div>
         </div>
 
+        @if (strtolower($fasilitas->status) == 'aktif')
         <!-- 4. Info Kapasitas & Jam Operasional -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="bg-white border border-gray-200 rounded-xl p-4 flex justify-between items-center shadow-sm">
@@ -270,8 +270,26 @@
                     Form Reservasi
                 </a>
             </div>
+            @else
+                @php
+                    $sedangPerbaikan = in_array(strtolower($fasilitas->status), ['dalam_perbaikan', 'sedang diperbaiki'], true);
+                @endphp
+
+                <div class="bg-white border border-[#e2e2ef] rounded-xl px-[2.2rem] py-[1.8rem]">
+                    <h2 class="text-[1.4rem] font-bold text-[#1a1a4b] mb-[0.4rem]">Reservasi Tidak Tersedia</h2>
+                    <p class="text-[0.85rem] text-[#777]">
+                        <span class="text-[#c0392b]">*</span>
+                        @if ($sedangPerbaikan)
+                            {{ $fasilitas->nama }} sedang dalam perbaikan dan belum dapat menerima reservasi saat ini. <a href="{{ route('fasilitas-public.index') }}" style="color:#c0392b;">Lihat fasilitas lain</a>
+                        @else
+                            {{ $fasilitas->nama }} sedang tidak aktif dan belum dapat menerima reservasi saat ini. <a href="{{ route('fasilitas-public.index') }}" style="color: #c0392b;">Lihat fasilitas lain</a>
+                        @endif
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
+
 
     <!-- Script render ikon -->
     <script>
